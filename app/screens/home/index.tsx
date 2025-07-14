@@ -1,23 +1,41 @@
-import { ScrollView, Text, View, Button, Pressable } from "react-native"
+import { Text, View, Pressable, FlatList } from "react-native"
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { RootStackParamList } from "../../navigation/types";
 import styles from "./styles";
 import Card from "../../components/card/card";
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import colors from "../../constants/colors";
+import sizes from "../../constants/sizes";
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 const Home = () => {
+    const notes = [{ id: "1", title: "Untitle", content: "Lorem ipsum dolor sit, amet consectetur adipisicing elit." },
+    { id: "2", title: "Untitle", content: "Lorem ipsum dolor sit, amet consectetur adipisicing elit." },]
+     const navigation = useNavigation<NavigationProp>(); 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>My Notes</Text>
-            <ScrollView> 
-                <View style={styles.row}>
-                    <Card title="Untitle" content="Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                     Nesciunt ad aspernatur, quidem repudiandae, dignissimos sunt necessitatibus suscipit re
-                     iciendis delectus vel, consequatur iste? Optio sit dolore minus voluptas libero suscipit et."></Card>
-                    <Card title="Untitle" content=" Lo "></Card>
-                </View>
-            </ScrollView>
-            <Pressable style={styles.addNote}>
-                <Text style={{color:"white",fontSize: 16}}>Add task</Text>
-            </Pressable>
-        </View>
+        <SafeAreaView style={styles.safeArea}>
+            <View style={styles.container}>
+                <Text style={styles.title}>My Notes</Text>
+                <FlatList
+                    numColumns={1}
+                    data={notes}
+                    /* columnWrapperStyle={{gap:5}} */
+                    renderItem={({ item }) => <Card title={item.title} content={item.content} />} 
+                    keyExtractor={item => item.id} 
+                    ListEmptyComponent={<Text style={{ textAlign: 'center' }}>No notes yet</Text>}/>
+                <Pressable
+                style={styles.addNote}
+                onPress={() => navigation.navigate<'Note'>('Note')}
+                accessibilityRole="button"
+                accessibilityLabel="Add a new note"
+                >
+                    <Icon name="add" size={sizes.FONT_XXL} color={colors.ICON} />
+                </Pressable>
+            </View>
+        </SafeAreaView>
     )
 };
 

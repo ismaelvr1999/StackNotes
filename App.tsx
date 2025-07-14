@@ -1,26 +1,23 @@
 import React from 'react';
-import {StyleSheet } from 'react-native';
-import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaProvider} from 'react-native-safe-area-context';
 import Home from './app/screens/home';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Note from './app/screens/note';
+import { RootStackParamList } from './app/navigation/types';
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
 const App = () => {
-  const temp = [1,2,3,4];
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
-        <Home />
-      </SafeAreaView>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }} >
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Note" component={Note} />
+          </Stack.Navigator>
+        </NavigationContainer>
     </SafeAreaProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'black',
-    paddingHorizontal: 10
-  },
-});
 
 export default App;

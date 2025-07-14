@@ -1,27 +1,28 @@
 import { StyleSheet } from "react-native";
+import colors from "../../constants/colors";
+import sizes from "../../constants/sizes";
 const styles = StyleSheet.create({
-  container: {
-    flex:1,
+  safeArea: {
+    flex: 1,
+    backgroundColor: colors.BACKGROUND,
+    paddingHorizontal: 10
   },
-  row: {
-    flexDirection: "column",
-    gap: 10,
-    marginVertical: 5
+  container: {
+    flex: 1
   },
   title: {
-    fontSize: 42,
-    color: "white",
+    fontSize: sizes.FONT_XXL,
+    color: colors.TEXT,
     fontWeight: "bold",
     marginBottom: 15
   },
-  addNote:{
-    backgroundColor: "green",
-    color: "white",
-    padding: 10,
-    borderRadius:10,
-    position: "absolute",
-    right:0,
-    bottom: 10
+  addNote: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: colors.PRIMARY,
+    borderRadius: 30,
+    padding: 16
   }
 });
 
