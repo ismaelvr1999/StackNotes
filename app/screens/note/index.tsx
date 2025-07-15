@@ -1,6 +1,6 @@
 import { View, Pressable, TextInput, ScrollView } from "react-native"
-import sizes from "../../constants/sizes"
-import colors from "../../constants/colors"
+import sizes from "@constants/sizes"
+import colors from "@constants/colors"
 import styles from "./styles"
 import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from 'react-native-vector-icons/MaterialIcons';

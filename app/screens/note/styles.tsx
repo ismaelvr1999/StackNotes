@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
-import colors from "../../constants/colors";
-import sizes from "../../constants/sizes";
+import colors from "@constants/colors";
+import sizes from "@constants/sizes";
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         padding: 16
     },
     textContent:{
-        fontSize: sizes.FONT_LG,
+        fontSize: sizes.FONT_MD,
         color: colors.TEXT,
 
     }
