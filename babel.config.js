@@ -1,6 +1,6 @@
 module.exports = {
   presets: ['module:@react-native/babel-preset'],
- plugins: [
+  plugins: [
     [
       'module-resolver',
       {
@@ -12,7 +12,7 @@ module.exports = {
           '@navigators': './app/navigation',
           '@hooks': './app/hooks',
           '@constants': './app/constants',
-        },"@/*": ["app/*"]
+        }, "@/*": ["app/*"]
       },
     ],
   ],
