@@ -8,7 +8,7 @@ const RootStack = () => {
     return (
         <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }} >
             <Stack.Screen name="Home" component={Home}/>
-            <Stack.Screen name="Note" component={Note} />
+            <Stack.Screen name="Note" component={Note}/>
         </Stack.Navigator>
     );
 };

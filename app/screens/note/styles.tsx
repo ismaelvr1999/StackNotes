@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     title: {
-        fontSize: sizes.FONT_XXL,
+        fontSize: sizes.FONT_XL,
         color: colors.TEXT,
         fontWeight: "bold",
         marginBottom: 15
@@ -28,6 +28,9 @@ const styles = StyleSheet.create({
         fontSize: sizes.FONT_MD,
         color: colors.TEXT,
 
+    },
+    hearder: {
+        marginBottom: 5
     }
 });
 export default styles;

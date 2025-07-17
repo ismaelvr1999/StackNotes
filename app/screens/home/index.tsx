@@ -9,11 +9,26 @@ import sizes from "@constants/sizes";
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import SearchBar from "./components/searchBar";
+import { useEffect, useState } from "react";
+import { getNotes } from "../../db/queries/notes.queries";
+import connection from "../../db/connection";
+import { NoteModel } from "../../db/types/note.types";
+import mapRowsToArrays from "../../utils/mapRowsToArray";
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 const Home = () => {
-    const notes = [{ id: "1", title: "Untitle", content: "Lorem ipsum dolor sit, amet consectetur adipisicing elit." },
-    { id: "2", title: "Untitle", content: "Lorem ipsum dolor sit, amet consectetur adipisicing elit." },]
+    const [notes,setNotes] = useState<NoteModel[]>([]);
+    useEffect(()=>{
+        const fetchNotes = async () =>{
+            const db = await connection();
+            const results = await getNotes(db);
+            const notes = mapRowsToArrays<NoteModel>(results);
+            setNotes(notes);
+            await db.close();
+        };
+        fetchNotes();    
+    },[])
+
     const navigation = useNavigation<NavigationProp>(); 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -25,7 +40,7 @@ const Home = () => {
                     /* columnWrapperStyle={{gap:5}} */
                     renderItem={({ item }) => <Card title={item.title} content={item.content} />} 
                     keyExtractor={item => item.id} 
-                    ListEmptyComponent={<Text style={{ textAlign: 'center' }}>No notes yet</Text>}/>
+                    ListEmptyComponent={<Text style={{ textAlign: 'center',color:"white" }}>No notes yet</Text>}/>
                 <Pressable
                 style={styles.addNote}
                 onPress={() => navigation.navigate<'Note'>('Note')}

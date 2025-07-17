@@ -2,6 +2,6 @@ export default {
     TEXT: "white",
     BACKGROUND: "black",
     ICON: "white",
-    BORDER: "white",
+    BORDER: "#626363",
     PRIMARY: "green"
 }
