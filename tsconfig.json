@@ -8,6 +8,7 @@
       "@navigation/*": ["app/navigation/*"],
       "@hooks/*": ["app/hooks/*"],
       "@screens/*": ["app/screens/*"],
+      "@schemas/*": ["app/schemas/*"],
       "@/*": ["app/*"]
     }
   }

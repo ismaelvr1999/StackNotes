@@ -1,5 +1,5 @@
 import { Text, View } from "react-native"
-import styles from "./styles";
+import styles from "./card.styles";
 const Card = ({title,content}:{title:string,content:string})=>{
     return (
         <View style={styles.container}>

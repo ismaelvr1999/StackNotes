@@ -2,7 +2,7 @@ import colors from "@constants/colors";
 import sizes from "@constants/sizes";
 import { View, TextInput } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import styles from "./styles";
+import styles from "./searchBar.styles";
 const SearchBar = () => {
     return (
         <View style={styles.searchBarContainer}>

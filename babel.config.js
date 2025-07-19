@@ -12,6 +12,7 @@ module.exports = {
           '@navigators': './app/navigation',
           '@hooks': './app/hooks',
           '@constants': './app/constants',
+          '@schemas': './app/schemas',
         }, "@/*": ["app/*"]
       },
     ],
