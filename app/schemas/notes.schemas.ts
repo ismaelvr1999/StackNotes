@@ -11,8 +11,8 @@ const NoteSchema = z.object({
 export type NoteType = z.infer<typeof NoteSchema>;
 
 export const CreateNoteFormSchema = z.object({
-  title: z.string().optional(),
-  content: z.string().min(1, "Title is required"),
+  title: z.string(),
+  content: z.string().min(1, "Content is required"),
 });
 
 export type CreateNoteFormData = z.infer<typeof CreateNoteFormSchema>;

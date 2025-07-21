@@ -1,14 +1,17 @@
-import { View, Pressable, TextInput, ScrollView } from "react-native"
-import sizes from "@constants/sizes"
-import colors from "@constants/colors"
-import styles from "./createNoteScreen.styles"
+import { View, Pressable, TextInput, ScrollView } from "react-native";
+import sizes from "@constants/sizes";
+import colors from "@constants/colors";
+import styles from "./createNoteScreen.styles";
 import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Controller } from "react-hook-form"
-import useNote from "./createNoteScreen.hook"
+import { Controller } from "react-hook-form";
+import useNote from "./createNoteScreen.hook";
+import FAB from "@components/fab/fab";
+import React, { useRef } from 'react';
 
 const CreateNote = () => {
-    const {control, navigation, handleSubmit, onSubmit} = useNote();
+    const { control, navigation, handleSubmit, onSubmit } = useNote();
+        const inputRef = useRef<TextInput>(null);
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
@@ -24,28 +27,20 @@ const CreateNote = () => {
                     name="title"
                     rules={{ required: '' }}
                     render={({ field: { onChange, onBlur, value } }) => (
-                        <TextInput style={styles.title} onChangeText={onChange} onBlur={onBlur} value={value} placeholder="Untitle" />
+                        <TextInput inputMode="text" style={styles.title} onChangeText={onChange} onBlur={onBlur} value={value} placeholder="Untitle" />
                     )}
                 />
 
-                <ScrollView style={styles.container}>
+                <Pressable  style={styles.textContainer} onPress={()=> inputRef.current?.focus()}>
                     <Controller control={control}
                         name="content"
                         rules={{ required: '' }}
                         render={({ field: { onChange, onBlur, value } }) => (
-                            <TextInput multiline={true} style={styles.textContent} onChangeText={onChange} onBlur={onBlur} value={value} placeholder="Enter text" />
+                            <TextInput multiline={true} style={styles.textContent} ref={inputRef} onChangeText={onChange} onBlur={onBlur} value={value} placeholder="Enter text" />
                         )}
                     />
-                </ScrollView>
-
-                <Pressable
-                    style={styles.saveNote}
-                    onPress={handleSubmit(onSubmit)}
-                    accessibilityRole="button"
-                    accessibilityLabel="Add a new note"
-                >
-                    <Icon name="save" size={sizes.FONT_XXL} color={colors.ICON} />
                 </Pressable>
+                <FAB nameIcon="save" accessibilityLabel="Add a new note" onPress={handleSubmit(onSubmit)} />
             </View>
         </SafeAreaView>
     )

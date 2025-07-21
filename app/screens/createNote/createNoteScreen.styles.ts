@@ -10,6 +10,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1
     },
+    textContainer: {
+        flex: 1
+    },
     title: {
         fontSize: sizes.FONT_XL,
         color: colors.TEXT,
@@ -27,7 +30,6 @@ const styles = StyleSheet.create({
     textContent:{
         fontSize: sizes.FONT_MD,
         color: colors.TEXT,
-
     },
     hearder: {
         marginBottom: 5
