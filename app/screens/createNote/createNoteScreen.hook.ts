@@ -1,11 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
-import { SubmitHandler, useForm, } from "react-hook-form"
-import connection from "../../db/connection";
-import { insertNote } from "../../db/queries/notes.queries";
-import { CreateNoteFormData } from "@schemas/notes.schemas";
+import { SubmitHandler, useForm, } from "react-hook-form";
+import connection from "@db/connection";
+import { insertNote } from "@db/queries/notes.queries";
+import { CreateNoteFormData, CreateNoteFormSchema } from "@schemas/notes.schemas";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from "@navigation/navigation.types"
-import showToast from "../../utils/showToast"
+import { RootStackParamList } from "@navigation/navigation.types";
+import showToast from "@utils/showToast";
+import { zodResolver } from '@hookform/resolvers/zod';
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'CreateNote'>;
 const useNote = () => {
     const navigation = useNavigation<NavigationProp>();

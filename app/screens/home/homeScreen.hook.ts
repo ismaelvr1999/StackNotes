@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { getNotes } from "../../db/queries/notes.queries";
-import connection from "../../db/connection";
+import { getNotes } from "@db/queries/notes.queries";
+import connection from "@db/connection";
 import { NoteType } from "@schemas/notes.schemas";
-import mapRowsToArrays from "../../utils/mapRowsToArray";
+import mapRowsToArrays from "@utils/mapRowsToArray";
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from "@navigation/navigation.types";

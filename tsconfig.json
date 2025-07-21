@@ -3,13 +3,15 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@/*": ["app/*"],
       "@constants/*": ["app/constants/*"],
       "@components/*": ["app/components/*"],
       "@navigation/*": ["app/navigation/*"],
       "@hooks/*": ["app/hooks/*"],
       "@screens/*": ["app/screens/*"],
       "@schemas/*": ["app/schemas/*"],
-      "@/*": ["app/*"]
+      "@db/*": ["app/db/*"],
+      "@utils/*": ["app/utils/*"],
     }
   }
 }
