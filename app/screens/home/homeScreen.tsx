@@ -6,7 +6,7 @@ import SearchBar from "./components/searchBar/searchBar";
 import useHome from "./homeScreen.hook";
 import FAB from "@components/fab/fab";
 const Home = () => {
-    const {notes,navigation} = useHome();
+    const { notes, navigation } = useHome();
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
@@ -15,10 +15,25 @@ const Home = () => {
                     numColumns={1}
                     data={notes}
                     /* columnWrapperStyle={{gap:5}} */
-                    renderItem={({ item }) => <Card title={item.title} content={item.content} />} 
-                    keyExtractor={item => item.id} 
-                    ListEmptyComponent={<Text style={{ textAlign: 'center',color:"white" }}>No notes yet</Text>}/>
-                <FAB nameIcon="add" accessibilityLabel="Add a new note" onPress={() => navigation.navigate<'CreateNote'>('CreateNote')}/>
+                    renderItem={({ item }) => {
+                        return (
+                            <Pressable
+                                onPress={() => navigation.navigate<'EditNote'>('EditNote',{
+                                    id: item.id,
+                                    title: item.title,
+                                    content: item.content
+                                })}
+                                accessibilityRole="button"
+                                accessibilityLabel="Edit note"
+                            >
+                                <Card title={item.title} content={item.content} />
+                            </Pressable>
+                        );
+                    }
+                    }
+                    keyExtractor={item => item.id}
+                    ListEmptyComponent={<Text style={{ textAlign: 'center', color: "white" }}>No notes yet</Text>} />
+                <FAB nameIcon="add" accessibilityLabel="Add a new note" onPress={() => navigation.navigate<'CreateNote'>('CreateNote')} />
             </View>
         </SafeAreaView>
     )

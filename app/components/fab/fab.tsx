@@ -4,7 +4,13 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import sizes from "@constants/sizes";
 import colors from "@constants/colors";
 import { GestureResponderEvent } from "react-native";
-const FAB = ({ nameIcon,accessibilityLabel,onPress }: { nameIcon: string,accessibilityLabel:string, onPress: ((event: GestureResponderEvent) => void) | null | undefined }) => {
+type FABProps ={
+    nameIcon: string;
+    accessibilityLabel:string;
+    onPress:  ((event: GestureResponderEvent) => void) | null | undefined;
+}
+
+const FAB = ({ nameIcon,accessibilityLabel,onPress }: FABProps) => {
     return (
         <Pressable
             style={styles.fab}

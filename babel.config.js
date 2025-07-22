@@ -17,6 +17,7 @@ module.exports = {
           '@schemas': './app/schemas',
           '@db': './app/db',
           '@utils': './app/utils',
+          '@context': './app/context',
         }
       },
     ],
