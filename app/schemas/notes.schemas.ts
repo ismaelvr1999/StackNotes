@@ -1,7 +1,7 @@
 import * as z from "zod";
 
 const NoteSchema = z.object({
-  id: z.uuid() ,
+  id: z.uuid(),
   title: z.string(),
   content: z.string(),
   created_at: z.iso.datetime(),
@@ -16,4 +16,21 @@ export const CreateNoteFormSchema = z.object({
 });
 
 export type CreateNoteFormData = z.infer<typeof CreateNoteFormSchema>;
+
+export const UpdateNoteFormSchema = z.object({
+  id: z.uuid(),
+  title: z.string(),
+  content: z.string().min(1, "Content is required"),
+});
+
+export type UpdateNoteFormData = z.infer<typeof UpdateNoteFormSchema>;
+
+export const CUNoteFormSchema = z.object({
+  id: z.uuid().optional(),
+  title: z.string(),
+  content: z.string().min(1, "Content is required"),
+});
+
+export type CUNoteFormData = z.infer<typeof CUNoteFormSchema>;
+
 

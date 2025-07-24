@@ -24,6 +24,7 @@ export const NoteProvider = ({ children }: { children: ReactNode }): JSX.Element
         const db = await connection();
         const results = await getNotes(db);
         const notes = mapRowsToArrays<NoteType>(results);
+        console.log(notes);
         setNotes(notes);
     };
 

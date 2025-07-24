@@ -2,9 +2,9 @@ import { Control, Controller } from "react-hook-form";
 import { StyleSheet, TextInput } from "react-native";
 import colors from "@constants/colors";
 import sizes from "@constants/sizes";
-import { CreateNoteFormData } from "@/schemas/notes.schemas";
+import { CUNoteFormData } from "@schemas/notes.schemas";
 type TitleProps = {
-    control: Control<CreateNoteFormData>
+    control: Control<CUNoteFormData>
 }
 
 const Title = ({control}:TitleProps) => {
@@ -13,7 +13,14 @@ const Title = ({control}:TitleProps) => {
             name="title"
             rules={{ required: '' }}
             render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput inputMode="text" style={styles.title} onChangeText={onChange} onBlur={onBlur} value={value} placeholder="Title" />
+                <TextInput 
+                    inputMode="text" 
+                    style={styles.title} 
+                    onChangeText={onChange} 
+                    onBlur={onBlur} 
+                    value={value} 
+                    placeholder="Title" 
+                    />
             )}
         />
     )

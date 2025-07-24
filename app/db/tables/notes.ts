@@ -6,8 +6,8 @@ export const createNotesTable = (tx: Transaction) => {
       id VARCHAR(36) PRIMARY KEY NOT NULL,
       title TEXT DEFAULT 'Untitle',
       content TEXT NOT NULL,
-      created_at DATETIME DEFAULT CURRENT_DATE,
-      updated_at DATETIME DEFAULT CURRENT_DATE
+      created_at DATETIME DEFAULT NOW,
+      updated_at DATETIME DEFAULT NOW
     );
   `);
 };
