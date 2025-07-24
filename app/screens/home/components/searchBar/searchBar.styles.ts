@@ -13,7 +13,8 @@ const styles = StyleSheet.create({
   },
   searchBarInput: {
     fontSize: sizes.FONT_MD,
-    flex:1
+    flex:1,
+    color: colors.TEXT
   }
 });
 

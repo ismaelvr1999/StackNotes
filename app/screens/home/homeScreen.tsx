@@ -32,7 +32,7 @@ const Home = () => {
                     }
                     }
                     keyExtractor={item => item.id}
-                    ListEmptyComponent={<Text style={{ textAlign: 'center', color: "white" }}>No notes yet</Text>} />
+                    ListEmptyComponent={<Text style={{ textAlign: 'center', color: "white" }}>No notes found</Text>} />
                 <FAB nameIcon="add" accessibilityLabel="Add a new note" onPress={() => navigation.navigate<'CreateNote'>('CreateNote')} />
             </View>
         </SafeAreaView>

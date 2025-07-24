@@ -21,3 +21,10 @@ export const updateNote = async (db:SQLiteDatabase, note:CUNoteFormData) => {
         WHERE id = '${note.id}'`;
     return await db.executeSql(query);
 }
+
+export const searchNote = async (db:SQLiteDatabase,searchValue:string) =>{
+    const query = `SELECT * FROM notes 
+        WHERE content LIKE '%${searchValue}%' OR title LIKE '%${searchValue}%'  
+        ORDER BY updated_at DESC`;
+    return await db.executeSql(query);
+} 
