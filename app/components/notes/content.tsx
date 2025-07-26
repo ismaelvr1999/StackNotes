@@ -2,11 +2,11 @@ import { Pressable, TextInput , StyleSheet } from "react-native";
 import sizes from "@constants/sizes";
 import colors from "@constants/colors";
 import { Controller, Control } from "react-hook-form";
-import { CreateNoteFormData } from "@schemas/notes.schemas";
+import { CUNoteFormData } from "@schemas/notes.schemas";
 import { useRef } from "react";
 
 type ContentProps = {
-    control: Control<CreateNoteFormData>
+    control: Control<CUNoteFormData>
 }
 const Content = ({control}:ContentProps) => {
     const inputRef = useRef<TextInput>(null);
@@ -28,9 +28,9 @@ export default Content;
 const styles = StyleSheet.create({
     textContent:{
         fontSize: sizes.FONT_MD,
-        color: colors.TEXT,
+        color: colors.TEXT
     },
     container: {
-        flex: 1
+        flex: 1,
     }
 });

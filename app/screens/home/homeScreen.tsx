@@ -18,11 +18,7 @@ const Home = () => {
                     renderItem={({ item }) => {
                         return (
                             <Pressable
-                                onPress={() => navigation.navigate<'EditNote'>('EditNote',{
-                                    id: item.id,
-                                    title: item.title,
-                                    content: item.content
-                                })}
+                                onPress={() => navigation.navigate<'EditNote'>('EditNote',item)}
                                 accessibilityRole="button"
                                 accessibilityLabel="Edit note"
                             >

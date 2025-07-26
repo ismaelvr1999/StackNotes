@@ -8,14 +8,16 @@ const styles = StyleSheet.create({
     borderColor: colors.BORDER,
     borderWidth: 1,
     borderRadius: 20,
-    padding: 5,
-    marginBottom: 15
+    marginBottom: 15,
+    paddingHorizontal: 15
   },
   searchBarInput: {
     fontSize: sizes.FONT_MD,
     flex:1,
-    color: colors.TEXT
-  }
+    color: colors.TEXT,
+    marginLeft: 5
+  },
+
 });
 
 export default styles;

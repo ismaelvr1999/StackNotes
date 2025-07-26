@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from "./searchBar.styles";
 import { UseNoteContext } from "@context/noteContext";
 const SearchBar = () => {
-    const {search,setSearch} = UseNoteContext();
+    const { search, setSearch } = UseNoteContext();
     return (
         <View style={styles.searchBarContainer}>
             <Icon name="search" size={sizes.FONT_LG} color={colors.ICON} />
