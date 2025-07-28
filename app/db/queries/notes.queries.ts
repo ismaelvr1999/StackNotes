@@ -28,3 +28,8 @@ export const searchNote = async (db:SQLiteDatabase,searchValue:string) =>{
         ORDER BY updated_at DESC`;
     return await db.executeSql(query);
 } 
+
+export const deleteNote = async (db:SQLiteDatabase,id:string) =>{
+    const query = `DELETE FROM notes WHERE id = '${id}'`;
+    return await db.executeSql(query);
+} 

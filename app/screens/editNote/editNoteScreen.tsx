@@ -19,6 +19,7 @@ const EditNote = ({route,navigation}:Props) =>{
             <View style={styles.container}>  
                 <Hearder 
                     onBack={() => navigation.goBack()} 
+                    id={id}
                 />
                 <Title control={control} />
                 <Content control={control} />
