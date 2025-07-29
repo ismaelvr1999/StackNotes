@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
-import colors from "@constants/colors";
-import sizes from "@constants/sizes";
+import {colors,sizes} from "@constants/index";
 
 const styles = StyleSheet.create({
     container: {
@@ -8,7 +7,7 @@ const styles = StyleSheet.create({
         borderColor: colors.BORDER,
         borderWidth: 1,
         borderRadius: 5,
-        padding: 10,
+        padding: 15,
         overflow: "hidden",
         marginVertical: 5
     },

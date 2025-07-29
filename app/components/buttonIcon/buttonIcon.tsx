@@ -1,7 +1,6 @@
 import { GestureResponderEvent } from "react-native";
 import { Pressable } from "react-native";
-import sizes from "@constants/sizes";
-import colors from "@/constants/colors";
+import {colors,sizes} from "@constants/index";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 type ButtonIconProps = {

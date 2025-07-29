@@ -1,8 +1,7 @@
 import { Pressable } from "react-native";
 import styles from "./fab.styles";
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import sizes from "@constants/sizes";
-import colors from "@constants/colors";
+import {colors,sizes} from "@constants/index";
 import { GestureResponderEvent } from "react-native";
 type FABProps ={
     nameIcon: string;

@@ -22,7 +22,7 @@ const Home = () => {
                                 accessibilityRole="button"
                                 accessibilityLabel="Edit note"
                             >
-                                <Card title={item.title} content={item.content} />
+                                <Card content={item.content} />
                             </Pressable>
                         );
                     }

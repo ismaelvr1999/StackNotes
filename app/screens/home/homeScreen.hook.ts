@@ -6,7 +6,6 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList,"Home">;
 const useHome = ()=>{
     const {notes} = UseNoteContext();
     const navigation = useNavigation<NavigationProp>();
-
     return {notes,navigation};
 }
 

@@ -1,6 +1,5 @@
 import { Pressable, TextInput , StyleSheet } from "react-native";
-import sizes from "@constants/sizes";
-import colors from "@constants/colors";
+import {colors,sizes} from "@constants/index";
 import { Controller, Control } from "react-hook-form";
 import { CUNoteFormData } from "@schemas/notes.schemas";
 import { useRef } from "react";

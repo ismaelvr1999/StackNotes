@@ -17,7 +17,7 @@ export const updateNote = async (db:SQLiteDatabase, note:CUNoteFormData) => {
         throw new Error("Id is required");
     }
     const query = `UPDATE notes 
-        SET title = '${note.title}', content = '${note.content}',updated_at = datetime('now') 
+        SET title = '${note.title}', content = '${note.content}',updated_at = datetime('now','localtime') 
         WHERE id = '${note.id}'`;
     return await db.executeSql(query);
 }

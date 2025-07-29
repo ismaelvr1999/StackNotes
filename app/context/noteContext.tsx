@@ -26,17 +26,28 @@ export const NoteProvider = ({ children }: { children: ReactNode }): JSX.Element
     const [debouncedInput, setDebouncedInput] = useState<string>(search);
 
     const fetchAndRefreshNotes = async () => {
-        const db = await connection();
-        const results = await getNotes(db);
-        const mappedNotes = mapRowsToArrays<NoteType>(results);
-        setNotes(mappedNotes);
+        try {
+            const db = await connection();
+            const results = await getNotes(db);
+            const mappedNotes = mapRowsToArrays<NoteType>(results);
+            setNotes(mappedNotes);
+            console.log(mappedNotes);
+        } catch (error) {
+            console.error("Failed to fetch and refresh notes:", error);
+            showToast("Error loading notes.  Try again.");
+        }
     };
 
     const handlerSearchNote = async (searchValue: string) => {
-        const db = await connection();
-        const results = await searchNote(db, searchValue);
-        const mappedNotes = mapRowsToArrays<NoteType>(results);
-        setNotes(mappedNotes);
+        try {
+            const db = await connection();
+            const results = await searchNote(db, searchValue);
+            const mappedNotes = mapRowsToArrays<NoteType>(results);
+            setNotes(mappedNotes);
+        } catch (error) {
+            console.error("Failed to search note:", error);
+            showToast("Error searching note.  Try again.");
+        }
     };
 
     useEffect(() => {
@@ -48,17 +59,12 @@ export const NoteProvider = ({ children }: { children: ReactNode }): JSX.Element
 
     useEffect(() => {
         const searchOrFetch = async () => {
-            try {
-                if (debouncedInput.trim() === '') {
-                    await fetchAndRefreshNotes();
-                    return;
-                }
-                await handlerSearchNote(debouncedInput);
-            } catch (error) {
-                showToast((error as Error).message)
+            if (debouncedInput.trim() === '') {
+                await fetchAndRefreshNotes();
+                return;
             }
+            await handlerSearchNote(debouncedInput);
         };
-
         searchOrFetch();
     }, [debouncedInput]);
 

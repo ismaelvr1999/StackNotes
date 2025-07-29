@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import colors from "@constants/colors";
+import {colors} from "@constants/index";
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,

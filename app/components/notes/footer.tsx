@@ -1,5 +1,4 @@
-import sizes from "@constants/sizes";
-import colors from "@constants/colors";
+import {colors,sizes} from "@constants/index";
 import { StyleSheet, Text, View } from "react-native"
 const Footer = ({editedDate}:{editedDate:string}) => {
     const date = new Date(editedDate);

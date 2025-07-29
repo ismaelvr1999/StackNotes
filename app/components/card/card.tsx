@@ -1,11 +1,8 @@
 import { Text, View } from "react-native"
 import styles from "./card.styles";
-const Card = ({title,content}:{title:string,content:string})=>{
+const Card = ({content}:{content:string})=>{
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>
-                {title}
-            </Text>
             <Text numberOfLines={3} ellipsizeMode="tail" style={styles.textContent}>
                 {content}
             </Text>

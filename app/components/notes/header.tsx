@@ -14,7 +14,7 @@ const Hearder = ({ onBack,id }: HearderProps) => {
     const {fetchAndRefreshNotes} = UseNoteContext();
     const handlerDelete = async (id: string | undefined) => {
         if(!id){
-            showToast("Cannot delete");
+            showToast("Nothing to delete");
             return;
         }
         try {
@@ -24,7 +24,8 @@ const Hearder = ({ onBack,id }: HearderProps) => {
             fetchAndRefreshNotes();
             onBack();
         } catch(error) {
-            console.log((error as Error).message);
+            console.error("Failed deleted note",error);
+            showToast("Error deleted note. Try again.")
         }
 
     }

@@ -1,7 +1,6 @@
 import { Control, Controller } from "react-hook-form";
 import { StyleSheet, TextInput } from "react-native";
-import colors from "@constants/colors";
-import sizes from "@constants/sizes";
+import {colors,sizes} from "@constants/index";
 import { CUNoteFormData } from "@schemas/notes.schemas";
 type TitleProps = {
     control: Control<CUNoteFormData>

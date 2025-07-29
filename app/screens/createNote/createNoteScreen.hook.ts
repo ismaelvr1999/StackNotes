@@ -22,25 +22,39 @@ const useNote = () => {
         }
     });
     const formValues = watch();
-    const onBack = () => {
-        saveNote();
-        navigation.goBack();
+    const onBack = async () => {
+        const result = await saveNote();
+        if(result) {
+            navigation.goBack();
+        }
         return true;
     }
 
     const saveNote = async () => {
-        if ( formValues.content !== '' || formValues.title !== 'Untitle') {
-            const db = await connection();
-            const result = await insertNote(db, formValues);
-            await fetchAndRefreshNotes();
-            showToast('Note saved');
-        } else {
-            showToast('Empty note discarted');
+        try {
+            if ( formValues.content !== '' || formValues.title !== 'Untitle') {
+                const db = await connection();
+                await insertNote(db, formValues);
+                await fetchAndRefreshNotes();
+                showToast('Note saved');
+                return true;
+            } else {
+                showToast('Empty note discarted');
+                return true;
+            }
+        } catch (error) {
+            console.error("Failed to save note:", error);
+            showToast("Error saving note. Try again.");
+            return false;
         }
     }
 
     useEffect(() => {
-        const backHandler = BackHandler.addEventListener("hardwareBackPress", onBack);
+        const handlerBackPress = () =>{
+            onBack();
+            return true;
+        }
+        const backHandler = BackHandler.addEventListener("hardwareBackPress", handlerBackPress);
         return () => backHandler.remove();
     }, [formValues]);
     return { control, onBack }
