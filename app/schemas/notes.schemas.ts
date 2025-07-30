@@ -3,6 +3,7 @@ import * as z from "zod";
 const NoteSchema = z.object({
   id: z.uuid(),
   title: z.string(),
+  favorite: z.literal([0,1]),
   content: z.string(),
   created_at: z.iso.datetime(),
   updated_at: z.iso.datetime()

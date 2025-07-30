@@ -1,35 +1,16 @@
-import { deleteNote } from "@db/queries/notes.queries";
 import ButtonIcon from "@components/buttonIcon/buttonIcon";
 import { StyleSheet, View } from "react-native";
-import showToast from "@utils/showToast";
-import connection from "@db/connection";
-import { UseNoteContext } from "@context/noteContext";
+import useHearder from "./hooks/hearder.hook";
 
 type HearderProps = {
     onBack: () => void;
     id?: string;
+    favorite: 0 | 1;
 };
 
-const Hearder = ({ onBack,id }: HearderProps) => {
-    const {fetchAndRefreshNotes} = UseNoteContext();
-    const handlerDelete = async (id: string | undefined) => {
-        if(!id){
-            showToast("Nothing to delete");
-            return;
-        }
-        try {
-            const db = await connection();
-            const result = await deleteNote(db,id);
-            showToast("Note deleted");
-            fetchAndRefreshNotes();
-            onBack();
-        } catch(error) {
-            console.error("Failed deleted note",error);
-            showToast("Error deleted note. Try again.")
-        }
-
-    }
-    return (
+const Hearder = ({ onBack, id, favorite }: HearderProps) => {
+    const {handlerDelete,handlerToggleFav,favState} = useHearder(favorite,onBack,id);
+     return (
         <View style={styles.container}>
             <ButtonIcon
                 nameIcon="arrow-back"
@@ -40,12 +21,12 @@ const Hearder = ({ onBack,id }: HearderProps) => {
                 <ButtonIcon
                     nameIcon="delete"
                     accessibilityLabel="delete note"
-                    onPress={()=> handlerDelete(id)}
+                    onPress={handlerDelete}
                 />
                 <ButtonIcon
-                    nameIcon="star-border"
-                    accessibilityLabel="add to favorites"
-                    onPress={onBack}
+                    nameIcon={favState === 1 ? "star" : "star-border"}
+                    accessibilityLabel="add or remove favorites"
+                    onPress={handlerToggleFav}
                 />
             </View>
         </View>
@@ -64,7 +45,7 @@ const styles = StyleSheet.create({
     },
     ActionBtnsContainer: {
         flexDirection: "row",
-        gap:10,
+        gap: 10,
         alignItems: "center"
     }
 })

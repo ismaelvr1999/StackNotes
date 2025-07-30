@@ -33,3 +33,10 @@ export const deleteNote = async (db:SQLiteDatabase,id:string) =>{
     const query = `DELETE FROM notes WHERE id = '${id}'`;
     return await db.executeSql(query);
 } 
+
+export const updateNoteFav = async (db:SQLiteDatabase, id:string, favoriteState:number) =>{
+        const query = `UPDATE notes 
+        SET favorite = ${favoriteState} ,updated_at = datetime('now','localtime') 
+        WHERE id = '${id}'`;
+    return await db.executeSql(query);
+}

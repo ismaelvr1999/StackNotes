@@ -8,18 +8,19 @@ import { Footer, Title, Hearder, Content } from "@components/notes/index";
 type Props = NativeStackScreenProps<RootStackParamList, 'EditNote'>;
 
 const EditNote = ({ route }: Props) => {
-    const { id, title, content, updated_at } = route.params;
-    const { control, onBack } = useEditNote(id, title, content);
+    const note = route.params;
+    const { control, onBack } = useEditNote(note.id,note.title,note.content);
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
                 <Hearder
                     onBack={onBack}
-                    id={id}
-                />
+                    id={note.id}
+                    favorite={note.favorite}
+                /> 
                 <Title control={control} />
                 <Content control={control} />
-                <Footer editedDate={updated_at} />
+                <Footer editedDate={note.updated_at} />
             </View>
         </SafeAreaView>
     );

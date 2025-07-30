@@ -31,7 +31,6 @@ export const NoteProvider = ({ children }: { children: ReactNode }): JSX.Element
             const results = await getNotes(db);
             const mappedNotes = mapRowsToArrays<NoteType>(results);
             setNotes(mappedNotes);
-            console.log(mappedNotes);
         } catch (error) {
             console.error("Failed to fetch and refresh notes:", error);
             showToast("Error loading notes.  Try again.");

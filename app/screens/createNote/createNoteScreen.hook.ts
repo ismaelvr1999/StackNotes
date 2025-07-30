@@ -11,7 +11,7 @@ import { UseNoteContext } from '@context/noteContext';
 import { BackHandler } from "react-native";
 import { useEffect } from 'react';
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'CreateNote'>;
-const useNote = () => {
+const useCreateNote = () => {
     const { fetchAndRefreshNotes } = UseNoteContext();
     const navigation = useNavigation<NavigationProp>();
     const { control , watch } = useForm<CUNoteFormData>({
@@ -60,4 +60,4 @@ const useNote = () => {
     return { control, onBack }
 }
 
-export default useNote;
+export default useCreateNote;

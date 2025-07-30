@@ -1,15 +1,15 @@
 import { View } from "react-native";
 import styles from "./createNoteScreen.styles";
 import { SafeAreaView } from "react-native-safe-area-context"
-import useNote from "./createNoteScreen.hook";
+import useCreateNote from "./createNoteScreen.hook";
 import { Footer, Content, Title, Hearder } from "@components/notes/index";
 const CreateNote = () => {
-    const { control, onBack } = useNote();
+    const { control, onBack } = useCreateNote();
     const date = new Date().toString();
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
-                <Hearder onBack={onBack} />
+                <Hearder onBack={onBack} favorite={0} />
                 <Title control={control} />
                 <Content control={control} />
                 <Footer editedDate={date} />
