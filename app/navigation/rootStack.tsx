@@ -5,7 +5,7 @@ import CreateNote from '@screens/createNote/createNoteScreen';
 import EditNote from '@/screens/editNote/editNoteScreen';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const RootStack = () => {
+const NotesStack = () => {
     return (
         <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }} >
             <Stack.Screen name="Home" component={Home}/>
@@ -15,5 +15,5 @@ const RootStack = () => {
     );
 };
 
-export default RootStack;
+export default NotesStack;
 

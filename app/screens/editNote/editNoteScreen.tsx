@@ -7,7 +7,7 @@ import useEditNote from "./editNoteScreen.hook";
 import { Footer, Title, Hearder, Content } from "@components/notes/index";
 type Props = NativeStackScreenProps<RootStackParamList, 'EditNote'>;
 
-const EditNote = ({ route }: Props) => {
+const EditNote = ({ route, navigation }: Props) => {
     const note = route.params;
     const { control, onBack } = useEditNote(note.id,note.title,note.content);
     return (
