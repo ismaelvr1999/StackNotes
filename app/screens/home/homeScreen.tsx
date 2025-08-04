@@ -5,22 +5,13 @@ import Card from "@components/card/card";
 import SearchBar from "./components/searchBar/searchBar";
 import useHome from "./homeScreen.hook";
 import FAB from "@components/fab/fab";
-import { DrawerNavigationProp } from '@react-navigation/drawer';
-// TODO: https://reactnavigation.org/docs/typescript/#combining-navigation-props
-type RootDrawerParamList = {
-    Notes: undefined;
-};
 
-type Props = {
-  navigation: DrawerNavigationProp<RootDrawerParamList, 'Notes'>;
-};
-
-const Home = ({ navigation }: Props) => {
-    const { notes, navigation:NotesNav } = useHome();
+const Home = () => {
+    const { notes, stackNav,drawerNav } = useHome();
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
-                <SearchBar openDrawer={() => navigation.openDrawer()} />
+                <SearchBar openDrawer={() => drawerNav.openDrawer()} />
                 <FlatList
                     numColumns={1}
                     data={notes}
@@ -28,7 +19,7 @@ const Home = ({ navigation }: Props) => {
                     renderItem={({ item }) => {
                         return (
                             <Pressable
-                                onPress={() => NotesNav.navigate<'EditNote'>('EditNote',item)}
+                                onPress={() => stackNav.navigate<'EditNote'>('EditNote',item)}
                                 accessibilityRole="button"
                                 accessibilityLabel="Edit note"
                             >
@@ -39,7 +30,7 @@ const Home = ({ navigation }: Props) => {
                     }
                     keyExtractor={item => item.id}
                     ListEmptyComponent={<Text style={{ textAlign: 'center', color: "white" }}>No notes found</Text>} />
-                <FAB nameIcon="add" accessibilityLabel="Add a new note" onPress={() => NotesNav.navigate<'CreateNote'>('CreateNote')} />
+                <FAB nameIcon="add" accessibilityLabel="Add a new note" onPress={() => stackNav.navigate<'CreateNote'>('CreateNote')} />
             </View>
         </SafeAreaView>
     )

@@ -5,3 +5,7 @@ export type RootStackParamList = {
     CreateNote: undefined,
     EditNote: NoteType,
 }
+
+export type DrawerParamList = {
+  Notes: undefined;
+};
