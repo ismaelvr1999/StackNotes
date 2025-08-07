@@ -4,7 +4,9 @@ const styles = StyleSheet.create({
     title:{
         color: colors.TEXT,
         fontSize: sizes.FONT_LG,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        marginBottom: 15
     }
+
 });
 export default styles;

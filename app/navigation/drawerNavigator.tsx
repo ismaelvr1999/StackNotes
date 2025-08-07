@@ -2,17 +2,10 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import NotesStack from './notesStack';
 import DrawerContent from '@/screens/drawer/drawerScreen';
 import { DrawerParamList } from './navigation.types';
-import { Text, View } from 'react-native'; 
+import Favorites from '@/screens/favorites/favoritesScreen';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
-const Test = ()=>{
-  return (
-    <View style={{backgroundColor:"black", flex:1}}>
-      <Text style={{color:"white"}}>test</Text>
-    </View>
-  )
-}
 const DrawerNavigator = () => {
   return (
     <Drawer.Navigator initialRouteName="Notes"
@@ -25,6 +18,7 @@ const DrawerNavigator = () => {
       detachInactiveScreens={true}
       drawerContent={(props) => <DrawerContent {...props} />}>
       <Drawer.Screen name="Notes" component={NotesStack} />
+      <Drawer.Screen name="Favorites" component={Favorites} />
     </Drawer.Navigator>
   );
 };

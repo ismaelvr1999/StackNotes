@@ -8,4 +8,5 @@ export type RootStackParamList = {
 
 export type DrawerParamList = {
   Notes: undefined;
+  Favorites: undefined;
 };
