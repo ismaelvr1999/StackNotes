@@ -10,13 +10,11 @@ const App = () => {
     initDB();
   }, []);
   return (
-    <NoteProvider>
       <SafeAreaProvider>
           <NavigationContainer>
             <DrawerNavigator />
           </NavigationContainer>
       </SafeAreaProvider>
-    </NoteProvider>
   );
 };
 

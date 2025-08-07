@@ -11,7 +11,7 @@ const Home = () => {
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
-                <SearchBar openDrawer={() => drawerNav.openDrawer()} />
+                <SearchBar openDrawer={drawerNav.openDrawer} />
                 <FlatList
                     numColumns={1}
                     data={notes}
