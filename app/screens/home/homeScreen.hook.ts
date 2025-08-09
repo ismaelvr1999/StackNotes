@@ -1,9 +1,9 @@
 import { useNavigation, CompositeScreenProps } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList, DrawerParamList } from "@navigation/navigation.types";
+import { HomeStackParamList, DrawerParamList } from "@navigation/navigation.types";
 import { UseNoteContext } from "@context/noteContext";
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-type stackNavProp = NativeStackNavigationProp<RootStackParamList,'Home'>;
+type stackNavProp = NativeStackNavigationProp<HomeStackParamList,'Home'>;
 type drawerNavProp = DrawerNavigationProp<DrawerParamList, 'Notes'>;
 
 const useHome = ()=>{

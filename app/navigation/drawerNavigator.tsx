@@ -2,23 +2,22 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import NotesStack from './notesStack';
 import DrawerContent from '@/screens/drawer/drawerScreen';
 import { DrawerParamList } from './navigation.types';
-import Favorites from '@/screens/favorites/favoritesScreen';
+import FavoritesStack from './favoritesStack';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator initialRouteName="Notes"
+    <Drawer.Navigator initialRouteName="NotesStack"
       screenOptions={{
         headerShown: false,
         drawerStyle: { backgroundColor: "#1a1a1a" }, 
         sceneStyle: { backgroundColor: "black" },
         drawerType: 'slide',
       }}
-      detachInactiveScreens={true}
       drawerContent={(props) => <DrawerContent {...props} />}>
-      <Drawer.Screen name="Notes" component={NotesStack} />
-      <Drawer.Screen name="Favorites" component={Favorites} />
+      <Drawer.Screen name="NotesStack" component={NotesStack} />
+      <Drawer.Screen name="FavoritesStack" component={FavoritesStack} />
     </Drawer.Navigator>
   );
 };

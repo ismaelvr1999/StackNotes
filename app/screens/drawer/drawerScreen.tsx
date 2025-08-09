@@ -19,14 +19,14 @@ const DrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
       <Text style={styles.title}>Stack Notes</Text>
       <DrawerItem
         title='Notes'
-        isActive={activeItemName === "Notes"}
+        isActive={activeItemName === "NotesStack"}
         iconName='notes'
-        handlerPress={() => navigation.navigate("Notes")} />
+        handlerPress={() => navigation.navigate("NotesStack")} />
       <DrawerItem
         title='Favorites'
-        isActive={activeItemName === "Favorites"}
+        isActive={activeItemName === "FavoritesStack"}
         iconName='star-border'
-        handlerPress={() => navigation.navigate("Favorites") } />
+        handlerPress={() => navigation.navigate("FavoritesStack") } />
 
     </DrawerContentScrollView>
   );

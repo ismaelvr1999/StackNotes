@@ -15,6 +15,13 @@ export const deleteFavorite = async (db:SQLiteDatabase, noteId:string) =>{
 };
 
 export const getFavorites = async (db:SQLiteDatabase) => {
-    const query = "SELECT * FROM favorites INNER JOIN notes ON notes.id = note_id";
+    const query = "SELECT notes.* FROM favorites INNER JOIN notes ON notes.id = favorites.note_id";
     return await db.executeSql(query);
 }
+
+export const searchFavNote = async (db:SQLiteDatabase,searchValue:string) =>{
+    const query = `SELECT notes.* FROM favorites INNER JOIN notes ON notes.id = favorites.note_id 
+        WHERE notes.content LIKE '%${searchValue}%' OR notes.title LIKE '%${searchValue}%'  
+        ORDER BY notes.updated_at DESC`;
+    return await db.executeSql(query);
+} 

@@ -1,10 +1,10 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { RootStackParamList } from './navigation.types';
+import { HomeStackParamList } from './navigation.types';
 import Home from '@screens/home/homeScreen';
 import CreateNote from '@screens/createNote/createNoteScreen';
 import EditNote from '@/screens/editNote/editNoteScreen';
 import { NoteProvider } from '@context/noteContext';
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<HomeStackParamList>();
 
 const NotesStack = () => {
     return (

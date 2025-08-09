@@ -6,11 +6,11 @@ import Card from "@components/card/card";
 import useFavorites from "./favoritesScreen.hook";
 
 const Favorites = () => {
-    const {favNotes, drawerNav} = useFavorites();
+    const {favNotes, drawerNav, search ,setSearch} = useFavorites();
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
-                <Header openDrawer={drawerNav.openDrawer} />
+                <Header searchValue={search} setSearch={setSearch} openDrawer={drawerNav.openDrawer} />
                 
                 <FlatList
                     numColumns={1}

@@ -1,12 +1,18 @@
 import { NoteType } from "@schemas/notes.schemas";
 
-export type RootStackParamList = {
+export type HomeStackParamList = {
     Home: undefined,
     CreateNote: undefined,
     EditNote: NoteType,
 }
 
 export type DrawerParamList = {
-  Notes: undefined;
-  Favorites: undefined;
+  NotesStack: undefined;
+  FavoritesStack: undefined;
 };
+
+export type FavoritesStackParamList = {
+    Favorites: undefined,
+    CreateNote: undefined,
+    EditNote: NoteType,
+}

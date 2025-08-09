@@ -4,13 +4,13 @@ import connection from "@db/connection";
 import { insertNote } from "@db/queries/notes.queries";
 import { CUNoteFormData, CUNoteFormSchema } from "@schemas/notes.schemas";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from "@navigation/navigation.types";
+import { HomeStackParamList } from "@navigation/navigation.types";
 import showToast from "@utils/showToast";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { UseNoteContext } from '@context/noteContext';
 import { BackHandler } from "react-native";
 import { useEffect } from 'react';
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'CreateNote'>;
+type NavigationProp = NativeStackNavigationProp<HomeStackParamList, 'CreateNote'>;
 const useCreateNote = () => {
     const { fetchAndRefreshNotes } = UseNoteContext();
     const navigation = useNavigation<NavigationProp>();

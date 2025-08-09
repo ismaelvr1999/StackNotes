@@ -23,7 +23,6 @@ export const UseNoteContext = () => {
 export const NoteProvider = ({ children }: { children: ReactNode }): JSX.Element => {
     const [notes, setNotes] = useState<NoteType[]>([]);
     const [search, setSearch] = useState<string>('');
-    const [debouncedInput, setDebouncedInput] = useState<string>(search);
 
     const fetchAndRefreshNotes = async () => {
         try {
@@ -50,22 +49,15 @@ export const NoteProvider = ({ children }: { children: ReactNode }): JSX.Element
     };
 
     useEffect(() => {
-        const handlerTimeout = setTimeout(() => {
-            setDebouncedInput(search);
-        }, 200);
+        if(search.trim() === '') {
+            fetchAndRefreshNotes();
+            return ;
+        }       
+        const handlerTimeout = setTimeout( async () => {
+            await handlerSearchNote(search);
+        }, 300);
         return () => clearTimeout(handlerTimeout);
     }, [search]);
-
-    useEffect(() => {
-        const searchOrFetch = async () => {
-            if (debouncedInput.trim() === '') {
-                await fetchAndRefreshNotes();
-                return;
-            }
-            await handlerSearchNote(debouncedInput);
-        };
-        searchOrFetch();
-    }, [debouncedInput]);
 
     return (
         <NoteContext.Provider value={{

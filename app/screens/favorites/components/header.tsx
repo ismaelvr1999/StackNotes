@@ -1,12 +1,18 @@
 import { Text, View, TextInput, StyleSheet } from "react-native";
 import { colors, sizes } from "@constants/index";
 import ButtonIcon from "@components/buttonIcon/buttonIcon";
-const Header = ({openDrawer}:{openDrawer: () => void}) => {
+type props = {
+    openDrawer: () => void;
+    searchValue: string;
+    setSearch: (text:string) => void;
+}
+
+const Header = ({searchValue,openDrawer,setSearch}:props) => {
     return (
         <View style={styles.header}>
             <ButtonIcon nameIcon="menu" accessibilityLabel="open drawer" onPress={openDrawer} />
             <Text style={styles.title}>Favorites</Text>
-            <TextInput /* value={search} onChangeText={(text) => setSearch(text)} */ placeholder="Search your notes" style={styles.searchBarInput} />
+            <TextInput value={searchValue} onChangeText={(text) => setSearch(text)} placeholder="Search your notes" style={styles.searchBarInput} />
         </View>
     );
 };
