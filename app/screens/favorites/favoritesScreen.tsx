@@ -6,7 +6,7 @@ import Card from "@components/card/card";
 import useFavorites from "./favoritesScreen.hook";
 
 const Favorites = () => {
-    const {favNotes, drawerNav, search ,setSearch} = useFavorites();
+    const {favNotes, drawerNav,stackNav, search ,setSearch} = useFavorites();
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
@@ -19,7 +19,7 @@ const Favorites = () => {
                     renderItem={({ item }) => {
                         return (
                             <Pressable
-                                onPress={() => {}}
+                                onPress={() => stackNav.navigate<"EditNote">("EditNote",item)}
                                 accessibilityRole="button"
                                 accessibilityLabel="Edit note"
                             >

@@ -4,7 +4,7 @@ import { HomeStackParamList, DrawerParamList } from "@navigation/navigation.type
 import { UseNoteContext } from "@context/noteContext";
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 type stackNavProp = NativeStackNavigationProp<HomeStackParamList,'Home'>;
-type drawerNavProp = DrawerNavigationProp<DrawerParamList, 'Notes'>;
+type drawerNavProp = DrawerNavigationProp<DrawerParamList, 'NotesStack'>;
 
 const useHome = ()=>{
     const {notes} = UseNoteContext();

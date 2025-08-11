@@ -4,6 +4,7 @@ import { getNotes, searchNote } from "@db/queries/notes.queries";
 import mapRowsToArrays from "@utils/mapRowsToArray";
 import { NoteType } from "@schemas/notes.schemas";
 import showToast from "@utils/showToast";
+import useDebouncedSearch from "@/hooks/debouncedSearch.hook";
 
 type NoteContextType = {
     notes: NoteType[] | null;
@@ -22,8 +23,7 @@ export const UseNoteContext = () => {
 
 export const NoteProvider = ({ children }: { children: ReactNode }): JSX.Element => {
     const [notes, setNotes] = useState<NoteType[]>([]);
-    const [search, setSearch] = useState<string>('');
-
+    
     const fetchAndRefreshNotes = async () => {
         try {
             const db = await connection();
@@ -37,6 +37,10 @@ export const NoteProvider = ({ children }: { children: ReactNode }): JSX.Element
     };
 
     const handlerSearchNote = async (searchValue: string) => {
+        if(searchValue.trim() === '') {
+            fetchAndRefreshNotes();
+            return ;
+        }       
         try {
             const db = await connection();
             const results = await searchNote(db, searchValue);
@@ -47,17 +51,7 @@ export const NoteProvider = ({ children }: { children: ReactNode }): JSX.Element
             showToast("Error searching note.  Try again.");
         }
     };
-
-    useEffect(() => {
-        if(search.trim() === '') {
-            fetchAndRefreshNotes();
-            return ;
-        }       
-        const handlerTimeout = setTimeout( async () => {
-            await handlerSearchNote(search);
-        }, 300);
-        return () => clearTimeout(handlerTimeout);
-    }, [search]);
+    const {search,setSearch} = useDebouncedSearch(handlerSearchNote,300);
 
     return (
         <NoteContext.Provider value={{

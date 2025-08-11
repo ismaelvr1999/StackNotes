@@ -33,7 +33,7 @@ const useEditNote = (id: string, title: string, content: string) => {
             navigation.goBack();
         }
         return true;
-    }
+    };
 
     const debouncedSave = async (formValues: CUNoteFormData) => {
         try {
@@ -50,7 +50,7 @@ const useEditNote = (id: string, title: string, content: string) => {
             showToast("Error updating note. Try again.");
             return false;
         }
-    }
+    };
 
     useEffect(() => {
         const handlerTimeout = setTimeout(() => {
