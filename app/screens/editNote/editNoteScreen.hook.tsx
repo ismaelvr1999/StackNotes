@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import { useForm } from "react-hook-form";
 import connection from "@db/connection";
-import { updateNote } from "@db/queries/notes.queries";
+import { updateNote, deleteNote, updateNoteFav } from "@db/queries/notes.queries";
+import { deleteFavorite, insertFavorite } from "@db/queries/favorites.queries";
 import { CUNoteFormData, CUNoteFormSchema } from "@schemas/notes.schemas";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { HomeStackParamList } from "@navigation/navigation.types";
@@ -10,10 +11,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { UseNoteContext } from '@context/noteContext';
 import { useEffect, useState } from 'react';
 import { BackHandler } from 'react-native';
+import { SQLiteDatabase } from "react-native-sqlite-storage";
 type NavigationProp = NativeStackNavigationProp<HomeStackParamList, 'CreateNote'>;
 
-const useEditNote = (id: string, title: string, content: string) => {
+const useEditNote = (id: string, title: string, content: string, favorite: 0 | 1) => {
     const { fetchAndRefreshNotes } = UseNoteContext();
+    const [favState, setfavState] = useState(favorite);
     const [currentContent, setCurrentContent] = useState(content);
     const [currentTitle, setCurrentTitle] = useState(title);
     const navigation = useNavigation<NavigationProp>();
@@ -29,7 +32,7 @@ const useEditNote = (id: string, title: string, content: string) => {
 
     const onBack = async () => {
         const result = await debouncedSave(formValues);
-        if(result){
+        if (result) {
             navigation.goBack();
         }
         return true;
@@ -52,6 +55,60 @@ const useEditNote = (id: string, title: string, content: string) => {
         }
     };
 
+    const handlerDelete = async () => {
+        if (!id) {
+            showToast("Nothing to delete");
+            return;
+        }
+        try {
+            const db = await connection();
+            await deleteNote(db, id);
+            showToast("Note deleted");
+            fetchAndRefreshNotes();
+            onBack();
+        } catch (error) {
+            console.error("Failed deleted note", error);
+            showToast("Error deleted note. Try again.");
+        }
+
+    }
+
+    const handlerAddFav = async (db: SQLiteDatabase, id: string) => {
+        await insertFavorite(db, id);
+        await updateNoteFav(db, id, 1);
+        setfavState(1);
+        showToast("Note added to favorites");
+        fetchAndRefreshNotes();
+    };
+
+    const handlerRemoveFav = async (db: SQLiteDatabase, id: string) => {
+        await deleteFavorite(db, id);
+        await updateNoteFav(db, id, 0);
+        setfavState(0);
+        showToast("Note removed from favorites");
+        fetchAndRefreshNotes();
+    };
+
+    const handlerToggleFav = async () => {
+        if (!id) {
+            showToast("Nothing to add");
+            return;
+        }
+        try {
+            const db = await connection();
+            if (favState === 0) {
+                await handlerAddFav(db, id);
+                return;
+            }
+            handlerRemoveFav(db, id);
+            return;
+
+        } catch (error) {
+            console.error("Failed added note to favorites", error);
+            showToast("Error added note to favorites. Try again.");
+        }
+    };
+
     useEffect(() => {
         const handlerTimeout = setTimeout(() => {
             debouncedSave(formValues);
@@ -67,7 +124,7 @@ const useEditNote = (id: string, title: string, content: string) => {
         const backHandler = BackHandler.addEventListener("hardwareBackPress", handlerBackPress);
         return () => backHandler.remove();
     }, [formValues]);
-    return { control, onBack }
+    return { control, onBack, handlerToggleFav, favState, handlerDelete  }
 }
 
 export default useEditNote;

@@ -1,15 +1,14 @@
 import ButtonIcon from "@components/buttonIcon/buttonIcon";
 import { StyleSheet, View } from "react-native";
-import useHearder from "./hooks/hearder.hook";
 
 type HearderProps = {
     onBack: () => void;
-    id?: string;
     favorite: 0 | 1;
+    handlerDelete: () => Promise<void>;
+    handlerToggleFav: () => Promise<void>;
 };
 
-const Hearder = ({ onBack, id, favorite }: HearderProps) => {
-    const {handlerDelete,handlerToggleFav,favState} = useHearder(favorite,onBack,id);
+const Hearder = ({ favorite, handlerToggleFav, handlerDelete, onBack }: HearderProps) => {
      return (
         <View style={styles.container}>
             <ButtonIcon
@@ -24,7 +23,7 @@ const Hearder = ({ onBack, id, favorite }: HearderProps) => {
                     onPress={handlerDelete}
                 />
                 <ButtonIcon
-                    nameIcon={favState === 1 ? "star" : "star-border"}
+                    nameIcon={favorite === 1 ? "star" : "star-border"}
                     accessibilityLabel="add or remove favorites"
                     onPress={handlerToggleFav}
                 />

@@ -7,16 +7,17 @@ import useEditNote from "./editNoteScreen.hook";
 import { Footer, Title, Hearder, Content } from "@components/notes/index";
 type Props = NativeStackScreenProps<HomeStackParamList, 'EditNote'>;
 
-const EditNote = ({ route, navigation }: Props) => {
+const EditNote = ({ route }: Props) => {
     const note = route.params;
-    const { control, onBack } = useEditNote(note.id,note.title,note.content);
+    const { control, onBack, favState, handlerDelete, handlerToggleFav } = useEditNote(note.id,note.title,note.content,note.favorite);
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
                 <Hearder
                     onBack={onBack}
-                    id={note.id}
-                    favorite={note.favorite}
+                    favorite={favState}
+                    handlerDelete={handlerDelete}
+                    handlerToggleFav={handlerToggleFav}
                 /> 
                 <Title control={control} />
                 <Content control={control} />

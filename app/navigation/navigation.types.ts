@@ -13,6 +13,5 @@ export type DrawerParamList = {
 
 export type FavoritesStackParamList = {
     Favorites: undefined,
-    CreateNote: undefined,
-    EditNote: NoteType,
+    EditFavoriteNote: NoteType,
 }

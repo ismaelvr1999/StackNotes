@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useNavigation } from '@react-navigation/native';
+import { useCallback, useState } from "react";
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { NoteType } from "@schemas/notes.schemas";
 import connection from "@db/connection";
 import { getFavorites, searchFavNote } from "@db/queries/favorites.queries";
@@ -10,13 +10,13 @@ import showToast from "@/utils/showToast";
 import useDebouncedSearch from "@/hooks/debouncedSearch.hook";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 type drawerNavProp = DrawerNavigationProp<DrawerParamList, 'FavoritesStack'>;
-type stackNavProp = NativeStackNavigationProp<FavoritesStackParamList,'Favorites'>;
+type stackNavProp = NativeStackNavigationProp<FavoritesStackParamList, 'Favorites'>;
 
 const useFavorites = () => {
     const [favNotes, setFavNotes] = useState<NoteType[]>();
     const drawerNav = useNavigation<drawerNavProp>();
     const stackNav = useNavigation<stackNavProp>();
- 
+
     const fetchAndRefreshFavNotes = async () => {
         try {
             const db = await connection();
@@ -44,8 +44,11 @@ const useFavorites = () => {
             showToast("Error searching note.  Try again.");
         }
     };
-    const {search, setSearch} = useDebouncedSearch(handlerSearchNote,300);
+    const { search, setSearch } = useDebouncedSearch(handlerSearchNote, 300);
 
+    useFocusEffect(useCallback(() => {
+        fetchAndRefreshFavNotes();
+    }, []));
 
     return { favNotes, drawerNav, search, setSearch, fetchAndRefreshFavNotes, stackNav };
 }
