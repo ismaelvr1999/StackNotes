@@ -22,6 +22,7 @@ const useFavorites = () => {
             const db = await connection();
             const results = await getFavorites(db);
             const mappedNotes = mapRowsToArrays<NoteType>(results);
+            console.log(mappedNotes);
             setFavNotes(mappedNotes);
         } catch (error) {
             console.error("Failed to search note:", error);

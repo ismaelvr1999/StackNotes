@@ -19,7 +19,7 @@ const Favorites = () => {
                     renderItem={({ item }) => {
                         return (
                             <Pressable
-                               // onPress={() => stackNav.navigate<"EditFavoriteNote">("EditFavoriteNote",item)}
+                                onPress={() => stackNav.navigate<"EditFavoriteNote">("EditFavoriteNote",item)}
                                 accessibilityRole="button"
                                 accessibilityLabel="Edit note"
                             >

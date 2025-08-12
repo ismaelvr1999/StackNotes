@@ -8,14 +8,12 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { HomeStackParamList } from "@navigation/navigation.types";
 import showToast from "@utils/showToast";
 import { zodResolver } from '@hookform/resolvers/zod';
-import { UseNoteContext } from '@context/noteContext';
 import { useEffect, useState } from 'react';
 import { BackHandler } from 'react-native';
 import { SQLiteDatabase } from "react-native-sqlite-storage";
-type NavigationProp = NativeStackNavigationProp<HomeStackParamList, 'CreateNote'>;
+type NavigationProp = NativeStackNavigationProp<HomeStackParamList, 'EditNote'>;
 
 const useEditNote = (id: string, title: string, content: string, favorite: 0 | 1) => {
-    const { fetchAndRefreshNotes } = UseNoteContext();
     const [favState, setfavState] = useState(favorite);
     const [currentContent, setCurrentContent] = useState(content);
     const [currentTitle, setCurrentTitle] = useState(title);
@@ -43,7 +41,6 @@ const useEditNote = (id: string, title: string, content: string, favorite: 0 | 1
             if (currentContent !== formValues.content || currentTitle !== formValues.title) {
                 const db = await connection();
                 await updateNote(db, formValues);
-                await fetchAndRefreshNotes();
                 setCurrentContent(formValues.content);
                 setCurrentTitle(formValues.title);
             }
@@ -64,7 +61,6 @@ const useEditNote = (id: string, title: string, content: string, favorite: 0 | 1
             const db = await connection();
             await deleteNote(db, id);
             showToast("Note deleted");
-            fetchAndRefreshNotes();
             onBack();
         } catch (error) {
             console.error("Failed deleted note", error);
@@ -78,7 +74,6 @@ const useEditNote = (id: string, title: string, content: string, favorite: 0 | 1
         await updateNoteFav(db, id, 1);
         setfavState(1);
         showToast("Note added to favorites");
-        fetchAndRefreshNotes();
     };
 
     const handlerRemoveFav = async (db: SQLiteDatabase, id: string) => {
@@ -86,7 +81,6 @@ const useEditNote = (id: string, title: string, content: string, favorite: 0 | 1
         await updateNoteFav(db, id, 0);
         setfavState(0);
         showToast("Note removed from favorites");
-        fetchAndRefreshNotes();
     };
 
     const handlerToggleFav = async () => {
@@ -124,6 +118,7 @@ const useEditNote = (id: string, title: string, content: string, favorite: 0 | 1
         const backHandler = BackHandler.addEventListener("hardwareBackPress", handlerBackPress);
         return () => backHandler.remove();
     }, [formValues]);
+
     return { control, onBack, handlerToggleFav, favState, handlerDelete  }
 }
 

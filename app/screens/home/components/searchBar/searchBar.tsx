@@ -1,9 +1,12 @@
 import { View, TextInput } from "react-native";
 import styles from "./searchBar.styles";
-import { UseNoteContext } from "@context/noteContext";
 import ButtonIcon from "@components/buttonIcon/buttonIcon";
-const SearchBar = ({openDrawer}:{openDrawer: () => void}) => {
-    const { search, setSearch } = UseNoteContext();
+type Props = {
+    openDrawer: () => void; 
+    search:string;
+   setSearch: (text:string) => void;
+} 
+const SearchBar = ({openDrawer,search,setSearch}:Props) => {
     return (
         <View style={styles.searchBarContainer}>
             <ButtonIcon nameIcon="menu" accessibilityLabel="open drawer" onPress={openDrawer} />

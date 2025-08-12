@@ -9,14 +9,16 @@ type Props = NativeStackScreenProps<FavoritesStackParamList, 'EditFavoriteNote'>
 
 const EditFavoriteNote = ({ route }: Props) => {
     const note = route.params;
-    const { control, onBack } = useEditFavoriteNote(note.id,note.title,note.content);
+    const {  control, onBack, favState, handlerDelete, handlerToggleFav  } = useEditFavoriteNote(note.id,note.title,note.content,note.favorite);
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
-{/*                 <Hearder
+                <Hearder
                     onBack={onBack}
-                    favorite={note.favorite}
-                />  */}
+                    favorite={favState}
+                    handlerDelete={handlerDelete}
+                    handlerToggleFav={handlerToggleFav}
+                /> 
                 <Title control={control} />
                 <Content control={control} />
                 <Footer editedDate={note.updated_at} />

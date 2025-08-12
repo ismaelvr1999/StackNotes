@@ -7,11 +7,11 @@ import useHome from "./homeScreen.hook";
 import FAB from "@components/fab/fab";
 
 const Home = () => {
-    const { notes, stackNav,drawerNav } = useHome();
+    const { notes, stackNav,drawerNav, search, setSearch } = useHome();
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
-                <SearchBar openDrawer={drawerNav.openDrawer} />
+                <SearchBar openDrawer={drawerNav.openDrawer} search={search} setSearch={setSearch} />
                 <FlatList
                     numColumns={1}
                     data={notes}

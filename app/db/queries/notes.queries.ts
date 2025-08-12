@@ -1,11 +1,12 @@
 import { SQLiteDatabase } from "react-native-sqlite-storage";
-import { CUNoteFormData } from "@schemas/notes.schemas";
+import { CUNoteFormData, NoteType } from "@schemas/notes.schemas";
 import uuid from 'react-native-uuid';
-export const insertNote = async (db:SQLiteDatabase, note: CUNoteFormData) =>{
+export const insertNote = async (db:SQLiteDatabase, note: CUNoteFormData):Promise <CUNoteFormData> =>{
     note.id = uuid.v4();
-    const query = "INSERT INTO notes (id, title, content) VALUES (?, ?, ?)";
-    const params = [note.id, note.title, note.content];
-    return await db.executeSql(query,params);
+    const query = "INSERT INTO notes (id, title, content, favorite) VALUES (?, ?, ?, ?)";
+    const params = [note.id, note.title, note.content, note.favorite];
+    await db.executeSql(query,params);
+    return note;
 }
 
 export const getNotes = async (db:SQLiteDatabase) =>{
