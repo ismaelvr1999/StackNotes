@@ -16,6 +16,7 @@ const useHome = () => {
     const stackNav = useNavigation<stackNavProp>();
     const drawerNav = useNavigation<drawerNavProp>();
     const [notes, setNotes] = useState<NoteType[]>([]);
+    const [listLayout, setListLayout] = useState<"row" | "column">("row");
 
     const fetchAndRefreshNotes = async () => {
         try {
@@ -44,13 +45,17 @@ const useHome = () => {
             showToast("Error searching note.  Try again.");
         }
     };
+
+    const toggleLayout = () => {
+        setListLayout(value => value === "column" ? "row" : "column");
+    }
     const { search, setSearch } = useDebouncedSearch(handlerSearchNote, 300);
 
     useFocusEffect(useCallback(() => {
         fetchAndRefreshNotes();
     }, []));
 
-    return { notes, stackNav, drawerNav, search, setSearch };
+    return { notes, stackNav, drawerNav, search, setSearch, listLayout, toggleLayout };
 }
 
 export default useHome;

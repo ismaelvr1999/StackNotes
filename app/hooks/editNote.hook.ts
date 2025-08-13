@@ -1,29 +1,24 @@
-import { useNavigation } from '@react-navigation/native';
 import { useForm } from "react-hook-form";
 import connection from "@db/connection";
 import { updateNote, deleteNote, updateNoteFav } from "@db/queries/notes.queries";
 import { deleteFavorite, insertFavorite } from "@db/queries/favorites.queries";
-import { CUNoteFormData, CUNoteFormSchema } from "@schemas/notes.schemas";
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { HomeStackParamList } from "@navigation/navigation.types";
+import { CUNoteFormData, CUNoteFormSchema, NoteType } from "@schemas/notes.schemas";
 import showToast from "@utils/showToast";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
 import { BackHandler } from 'react-native';
 import { SQLiteDatabase } from "react-native-sqlite-storage";
-type NavigationProp = NativeStackNavigationProp<HomeStackParamList, 'EditNote'>;
 
-const useEditNote = (id: string, title: string, content: string, favorite: 0 | 1) => {
-    const [favState, setfavState] = useState(favorite);
-    const [currentContent, setCurrentContent] = useState(content);
-    const [currentTitle, setCurrentTitle] = useState(title);
-    const navigation = useNavigation<NavigationProp>();
+const useEditNote = (note: NoteType, goBack: ()=> void  ) => {
+    const [favState, setfavState] = useState(note.favorite);
+    const [currentContent, setCurrentContent] = useState(note.content);
+    const [currentTitle, setCurrentTitle] = useState(note.title);
     const { control, watch } = useForm<CUNoteFormData>({
         resolver: zodResolver(CUNoteFormSchema),
         defaultValues: {
-            id,
-            title,
-            content
+            id: note.id,
+            title: note.title,
+            content: note.content
         }
     });
     const formValues = watch();
@@ -31,7 +26,7 @@ const useEditNote = (id: string, title: string, content: string, favorite: 0 | 1
     const onBack = async () => {
         const result = await debouncedSave(formValues);
         if (result) {
-            navigation.goBack();
+            goBack();
         }
         return true;
     };
@@ -53,13 +48,13 @@ const useEditNote = (id: string, title: string, content: string, favorite: 0 | 1
     };
 
     const handlerDelete = async () => {
-        if (!id) {
+        if (!note.id) {
             showToast("Nothing to delete");
             return;
         }
         try {
             const db = await connection();
-            await deleteNote(db, id);
+            await deleteNote(db,note.id);
             showToast("Note deleted");
             onBack();
         } catch (error) {
@@ -84,17 +79,17 @@ const useEditNote = (id: string, title: string, content: string, favorite: 0 | 1
     };
 
     const handlerToggleFav = async () => {
-        if (!id) {
+        if (!note.id) {
             showToast("Nothing to add");
             return;
         }
         try {
             const db = await connection();
             if (favState === 0) {
-                await handlerAddFav(db, id);
+                await handlerAddFav(db,note.id);
                 return;
             }
-            handlerRemoveFav(db, id);
+            handlerRemoveFav(db, note.id);
             return;
 
         } catch (error) {
