@@ -3,7 +3,7 @@ import {colors,sizes} from "@constants/index";
 
 const styles = StyleSheet.create({
     container: {
-        flex:1,
+        flex: 1,
         borderColor: colors.BORDER,
         borderWidth: 1,
         borderRadius: 5,

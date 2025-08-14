@@ -10,8 +10,9 @@ const styles = StyleSheet.create({
     flex: 1
   },
   notesList: {
-    flex: 1,
-    flexDirection: "column"
+    flex:1,
+    flexDirection: "row",
+    flexWrap: "wrap"
   }
 });
 

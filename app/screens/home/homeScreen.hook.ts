@@ -49,13 +49,17 @@ const useHome = () => {
     const toggleLayout = () => {
         setListLayout(value => value === "column" ? "row" : "column");
     }
+
+    const goEditNote = (note: NoteType) => {
+        stackNav.navigate<'EditNote'>('EditNote', note);
+    }
     const { search, setSearch } = useDebouncedSearch(handlerSearchNote, 300);
 
     useFocusEffect(useCallback(() => {
         fetchAndRefreshNotes();
     }, []));
 
-    return { notes, stackNav, drawerNav, search, setSearch, listLayout, toggleLayout };
+    return { notes, stackNav, drawerNav, search, setSearch, listLayout, toggleLayout, goEditNote };
 }
 
 export default useHome;
