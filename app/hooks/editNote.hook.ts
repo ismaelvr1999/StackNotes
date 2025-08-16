@@ -8,11 +8,18 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
 import { BackHandler } from 'react-native';
 import { SQLiteDatabase } from "react-native-sqlite-storage";
+import BottomSheet from '@gorhom/bottom-sheet';
+import { useRef, useCallback } from "react";
 
-const useEditNote = (note: NoteType, goBack: ()=> void  ) => {
+const useEditNote = (note: NoteType, goBack: () => void) => {
     const [favState, setfavState] = useState(note.favorite);
     const [currentContent, setCurrentContent] = useState(note.content);
     const [currentTitle, setCurrentTitle] = useState(note.title);
+    const bottomSheetRef = useRef<BottomSheet>(null);
+    const handleOpenBottomSheet = useCallback(() => {
+        bottomSheetRef.current?.expand();
+    }, []);
+
     const { control, watch } = useForm<CUNoteFormData>({
         resolver: zodResolver(CUNoteFormSchema),
         defaultValues: {
@@ -54,7 +61,7 @@ const useEditNote = (note: NoteType, goBack: ()=> void  ) => {
         }
         try {
             const db = await connection();
-            await deleteNote(db,note.id);
+            await deleteNote(db, note.id);
             showToast("Note deleted");
             onBack();
         } catch (error) {
@@ -86,7 +93,7 @@ const useEditNote = (note: NoteType, goBack: ()=> void  ) => {
         try {
             const db = await connection();
             if (favState === 0) {
-                await handlerAddFav(db,note.id);
+                await handlerAddFav(db, note.id);
                 return;
             }
             handlerRemoveFav(db, note.id);
@@ -114,7 +121,14 @@ const useEditNote = (note: NoteType, goBack: ()=> void  ) => {
         return () => backHandler.remove();
     }, [formValues]);
 
-    return { control, onBack, handlerToggleFav, favState, handlerDelete  }
+    return { 
+        control, 
+        onBack, 
+        handlerToggleFav, 
+        favState, 
+        handlerDelete,
+        handleOpenBottomSheet,
+        bottomSheetRef };
 }
 
 export default useEditNote;

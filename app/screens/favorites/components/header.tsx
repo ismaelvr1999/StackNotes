@@ -4,15 +4,21 @@ import ButtonIcon from "@components/buttonIcon/buttonIcon";
 type props = {
     openDrawer: () => void;
     searchValue: string;
-    setSearch: (text:string) => void;
+    setSearch: (text: string) => void;
+    toggleLayout: () => void;
+    listLayout: "row" | "column";
 }
 
-const Header = ({searchValue,openDrawer,setSearch}:props) => {
+const Header = ({ searchValue, openDrawer, setSearch, toggleLayout, listLayout }: props) => {
     return (
         <View style={styles.header}>
             <ButtonIcon nameIcon="menu" accessibilityLabel="open drawer" onPress={openDrawer} />
             <Text style={styles.title}>Favorites</Text>
             <TextInput value={searchValue} onChangeText={(text) => setSearch(text)} placeholder="Search your notes" style={styles.searchBarInput} />
+            <ButtonIcon
+                nameIcon={listLayout === "row" ? "grid-view" : "splitscreen"}
+                accessibilityLabel="open drawer"
+                onPress={toggleLayout} />
         </View>
     );
 };

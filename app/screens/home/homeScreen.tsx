@@ -9,7 +9,15 @@ import NoteList from "@components/noteList/noteList";
 
 
 const Home = () => {
-    const { notes, stackNav, drawerNav, search, setSearch, listLayout, toggleLayout, goEditNote } = useHome();
+    const { 
+        notes, 
+        stackNav, 
+        drawerNav, 
+        search, 
+        setSearch, 
+        listLayout, 
+        toggleLayout, 
+        goEditNote } = useHome();
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>

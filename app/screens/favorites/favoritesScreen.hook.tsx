@@ -13,9 +13,10 @@ type drawerNavProp = DrawerNavigationProp<DrawerParamList, 'FavoritesStack'>;
 type stackNavProp = NativeStackNavigationProp<FavoritesStackParamList, 'Favorites'>;
 
 const useFavorites = () => {
-    const [favNotes, setFavNotes] = useState<NoteType[]>();
+    const [favNotes, setFavNotes] = useState<NoteType[]>([]);
     const drawerNav = useNavigation<drawerNavProp>();
     const stackNav = useNavigation<stackNavProp>();
+    const [listLayout, setListLayout] = useState<"row" | "column">("row");
 
     const fetchAndRefreshFavNotes = async () => {
         try {
@@ -45,13 +46,30 @@ const useFavorites = () => {
             showToast("Error searching note.  Try again.");
         }
     };
+
+    const toggleLayout = () => {
+        setListLayout(value => value === "column" ? "row" : "column");
+    }
+
+    const goEditFavNote = (note: NoteType) => {
+        stackNav.navigate<'EditFavoriteNote'>('EditFavoriteNote', note);
+    }
     const { search, setSearch } = useDebouncedSearch(handlerSearchNote, 300);
 
     useFocusEffect(useCallback(() => {
         fetchAndRefreshFavNotes();
     }, []));
 
-    return { favNotes, drawerNav, search, setSearch, fetchAndRefreshFavNotes, stackNav };
+    return { 
+        favNotes, 
+        drawerNav, 
+        search, 
+        setSearch, 
+        fetchAndRefreshFavNotes, 
+        stackNav, 
+        toggleLayout, 
+        goEditFavNote, 
+        listLayout };
 }
 
 export default useFavorites;
