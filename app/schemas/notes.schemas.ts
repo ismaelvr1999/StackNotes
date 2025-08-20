@@ -5,6 +5,7 @@ const NoteSchema = z.object({
   title: z.string(),
   favorite: z.literal([0,1]),
   content: z.string(),
+  color: z.string(),
   created_at: z.iso.datetime(),
   updated_at: z.iso.datetime()
 });
@@ -14,6 +15,7 @@ export type NoteType = z.infer<typeof NoteSchema>;
 export const CUNoteFormSchema = z.object({
   id: z.uuid().optional(),
   title: z.string(),
+  color: z.string(),
   favorite: z.literal([0,1]),
   content: z.string().min(1, "Content is required"),
 });

@@ -5,13 +5,23 @@ import { View } from "react-native";
 import styles from "./editFavoriteNoteScreen.styles"
 import useEditNote from "@hooks/editNote.hook";
 import { Footer, Title, Hearder, Content } from "@components/notes/index";
+import BottomSheetColors from "@components/bottomSheetColors/bottomSheetColors";
 type Props = NativeStackScreenProps<FavoritesStackParamList, 'EditFavoriteNote'>;
 
 const EditFavoriteNote = ({ route, navigation }: Props) => {
     const note = route.params;
-    const { control, onBack, favState, handlerDelete, handlerToggleFav } = useEditNote(note, navigation.goBack);
+    const {
+        control,
+        onBack,
+        favState,
+        handlerDelete,
+        handlerToggleFav,
+        handleOpenBottomSheet, 
+        handleChangeColor,
+        noteColor,
+        bottomSheetRef } = useEditNote(note, navigation.goBack);
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <SafeAreaView style={{...styles.safeArea,backgroundColor:noteColor}}>
             <View style={styles.container}>
                 <Hearder
                     onBack={onBack}
@@ -21,7 +31,8 @@ const EditFavoriteNote = ({ route, navigation }: Props) => {
                 />
                 <Title control={control} />
                 <Content control={control} />
-                <Footer editedDate={note.updated_at} />
+                <Footer editedDate={note.updated_at} handleOpenSheet={handleOpenBottomSheet} />
+                <BottomSheetColors handleChangeColor={handleChangeColor} noteColor={noteColor} bottomSheetRef={bottomSheetRef} />
             </View>
         </SafeAreaView>
     );

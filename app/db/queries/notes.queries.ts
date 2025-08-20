@@ -1,10 +1,10 @@
 import { SQLiteDatabase } from "react-native-sqlite-storage";
-import { CUNoteFormData, NoteType } from "@schemas/notes.schemas";
+import { CUNoteFormData } from "@schemas/notes.schemas";
 import uuid from 'react-native-uuid';
 export const insertNote = async (db:SQLiteDatabase, note: CUNoteFormData):Promise <CUNoteFormData> =>{
     note.id = uuid.v4();
-    const query = "INSERT INTO notes (id, title, content, favorite) VALUES (?, ?, ?, ?)";
-    const params = [note.id, note.title, note.content, note.favorite];
+    const query = "INSERT INTO notes (id, title, content, favorite, color) VALUES (?, ?, ?, ?, ?)";
+    const params = [note.id, note.title, note.content, note.favorite,note.color];
     await db.executeSql(query,params);
     return note;
 }
@@ -38,6 +38,13 @@ export const deleteNote = async (db:SQLiteDatabase,id:string) =>{
 export const updateNoteFav = async (db:SQLiteDatabase, id:string, favoriteState:number) =>{
         const query = `UPDATE notes 
         SET favorite = ${favoriteState} ,updated_at = datetime('now','localtime') 
+        WHERE id = '${id}'`;
+    return await db.executeSql(query);
+}
+
+export const updateNoteColor = async (db:SQLiteDatabase,id:string,color:string) => {
+        const query = `UPDATE notes 
+        SET color = '${color}' ,updated_at = datetime('now','localtime') 
         WHERE id = '${id}'`;
     return await db.executeSql(query);
 }

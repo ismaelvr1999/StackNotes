@@ -11,7 +11,7 @@ const Footer = ({ editedDate, handleOpenSheet }: Props) => {
     return (
         <View>
             <View style={styles.footerContainer}>
-                <ButtonIcon nameIcon="color-lens" accessibilityLabel="set-color" onPress={handleOpenSheet} />
+                <ButtonIcon nameIcon="palette" accessibilityLabel="set-color" onPress={handleOpenSheet} />
                 <Text style={styles.editedDateText}>Edited {date.toDateString()}</Text>
             </View>
         </View>
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     },
     editedDateText: {
         flex: 1,
-        color: colors.TEXT_SECONDARY,
+        color: colors.TEXT,
         fontSize: sizes.FONT_XS,
         textAlign: "center"
     }

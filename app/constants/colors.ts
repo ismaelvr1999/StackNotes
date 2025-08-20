@@ -1,6 +1,6 @@
 export default {
     TEXT: "white",
-    BACKGROUND: "black",
+    BACKGROUND: "#000000",
     ICON: "white",
     BORDER: "#626363",
     PRIMARY: "green",

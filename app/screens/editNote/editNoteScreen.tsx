@@ -17,10 +17,12 @@ const EditNote = ({ route, navigation }: Props) => {
         handlerDelete,
         handlerToggleFav,
         handleOpenBottomSheet,
-        bottomSheetRef } = useEditNote(note, navigation.goBack);
+        bottomSheetRef,
+        handleChangeColor,
+        noteColor } = useEditNote(note, navigation.goBack);
     
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <SafeAreaView style={{...styles.safeArea,backgroundColor:noteColor}}>
             <View style={styles.container}>
                 <Hearder
                     onBack={onBack}
@@ -34,7 +36,7 @@ const EditNote = ({ route, navigation }: Props) => {
                 <Footer
                     editedDate={note.updated_at}
                     handleOpenSheet={handleOpenBottomSheet} />
-                <BottomSheetColors bottomSheetRef={bottomSheetRef} />
+                <BottomSheetColors handleChangeColor={handleChangeColor} noteColor={noteColor} bottomSheetRef={bottomSheetRef} />
             </View>
         </SafeAreaView>
     );

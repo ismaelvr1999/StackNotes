@@ -13,15 +13,15 @@ const NoteList = ({ notes, goEditNote, layout }: Props) => {
             numColumns={layout === "column" ? 2 : 1}
             columnWrapperStyle={layout === "column" ? { flex: 1, gap: 5 } : undefined}
             data={notes}
-            renderItem={({ item }) => {
+            renderItem={({ item:note }) => {
                 return (
                     <Pressable
-                        onPress={() => goEditNote(item)}
+                        onPress={() => goEditNote(note)}
                         accessibilityRole="button"
                         accessibilityLabel="Edit note"
                         style={{ flex: 1 }}
                     >
-                        <Card content={item.content} />
+                        <Card color={note.color} content={note.content} />
                     </Pressable>
 
                 );

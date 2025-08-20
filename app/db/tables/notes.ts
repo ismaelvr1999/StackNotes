@@ -6,6 +6,7 @@ export const createNotesTable = (tx: Transaction) => {
       id TEXT PRIMARY KEY NOT NULL,
       title TEXT DEFAULT 'Untitle',
       content TEXT NOT NULL,
+      color TEXT NOT NULL DEFAULT '#000000',
       favorite INTEGER NOT NULL DEFAULT 0,
       created_at DATETIME DEFAULT (datetime('now','localtime')),
       updated_at DATETIME DEFAULT (datetime('now','localtime'))

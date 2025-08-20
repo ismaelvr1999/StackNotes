@@ -1,11 +1,20 @@
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { FlatList } from 'react-native-gesture-handler';
-import { View, Text, ColorValue } from "react-native";
+import { View, Text } from "react-native";
 import { Ref, useMemo } from 'react';
 import styles from './bottomSheetColors.styles';
 import noteColors from "@constants/noteColors";
-const BottomSheetColors = ({ bottomSheetRef }: { bottomSheetRef: Ref<BottomSheet> | undefined }) => {
-    const colorsList = useMemo(()=> Object.keys(noteColors),[]);
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { colors, sizes } from "@constants/index";
+import { Pressable } from 'react-native';
+type Props = {
+    bottomSheetRef: Ref<BottomSheet> | undefined;
+    handleChangeColor: (color:string) => void;
+    noteColor: string
+}
+
+const BottomSheetColors = ({ bottomSheetRef,handleChangeColor,noteColor }: Props) => {
+    const colorsList = useMemo(() => Object.values(noteColors), []);
     return (
         <BottomSheet
             ref={bottomSheetRef}
@@ -24,11 +33,18 @@ const BottomSheetColors = ({ bottomSheetRef }: { bottomSheetRef: Ref<BottomSheet
                     keyExtractor={color => color}
                     renderItem={(color) => {
                         return (
-                            <View
-                                style={{backgroundColor: color.item, ...styles.colorContainer}}
+                            <Pressable
+                                onPress={() => handleChangeColor(color.item)}
                             >
                                 
+                            <View
+                                style={{ backgroundColor: color.item, ...styles.colorContainer }}
+                            >
+                                {color.item === noteColor &&
+                                    <Icon name="done" size={sizes.FONT_XL} color={colors.ICON} />
+                                }
                             </View>
+                            </Pressable>
                         );
                     }}
                 >

@@ -1,7 +1,6 @@
-import { Text, View, Pressable, FlatList } from "react-native"
+import { View } from "react-native"
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from "./homeScreen.styles";
-import Card from "@components/card/card";
 import SearchBar from "./components/searchBar/searchBar";
 import useHome from "./homeScreen.hook";
 import FAB from "@components/fab/fab";

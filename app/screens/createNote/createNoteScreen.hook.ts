@@ -8,14 +8,18 @@ import { HomeStackParamList } from "@navigation/navigation.types";
 import showToast from "@utils/showToast";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { BackHandler } from "react-native";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { insertFavorite } from '@db/queries/favorites.queries';
+import BottomSheet from '@gorhom/bottom-sheet';
+import { noteColors } from '@constants/index';
 
 type NavigationProp = NativeStackNavigationProp<HomeStackParamList, 'CreateNote'>;
 const useCreateNote = () => {
-    const [favState, setfavState] = useState<0 |  1>(0);
+    const [favState, setfavState] = useState<0 | 1>(0);
     const navigation = useNavigation<NavigationProp>();
-    const { control , watch } = useForm<CUNoteFormData>({
+    const [noteColor, setNoteColor] = useState(noteColors.default);
+    const bottomSheetRef = useRef<BottomSheet>(null);
+    const { control, watch } = useForm<CUNoteFormData>({
         resolver: zodResolver(CUNoteFormSchema),
         defaultValues: {
             title: "Untitle",
@@ -25,7 +29,7 @@ const useCreateNote = () => {
     const formValues = watch();
     const onBack = async () => {
         const result = await saveNote();
-        if(result) {
+        if (result) {
             navigation.goBack();
         }
         return true;
@@ -33,12 +37,13 @@ const useCreateNote = () => {
 
     const saveNote = async () => {
         try {
-            if ( formValues.content !== '' || formValues.title !== 'Untitle') {
+            if (formValues.content !== '' || formValues.title !== 'Untitle') {
                 const db = await connection();
                 formValues.favorite = favState;
-                const noteAdded =await insertNote(db, formValues);
-                if(favState === 1 && noteAdded.id) {
-                    await insertFavorite(db,noteAdded.id)
+                formValues.color = noteColor;
+                const noteAdded = await insertNote(db, formValues);
+                if (favState === 1 && noteAdded.id) {
+                    await insertFavorite(db, noteAdded.id)
                 }
                 showToast('Note saved');
                 return true;
@@ -53,28 +58,45 @@ const useCreateNote = () => {
         }
     }
 
-    const handlerDelete = async ()=>{
+    const handlerDelete = async () => {
         showToast("Note discarted");
         navigation.goBack();
     };
 
-    const handlerToggleFav = async () =>{
-        if(favState === 0){
+    const handlerToggleFav = async () => {
+        if (favState === 0) {
             setfavState(1);
-            return ;
+            return;
         }
         setfavState(0);
     }
+    const handleOpenBottomSheet = useCallback(() => {
+        bottomSheetRef.current?.expand();
+    }, []);
+
+    const handleChangeColor = async (color: string) => {
+        setNoteColor(color);
+    }
 
     useEffect(() => {
-        const handlerBackPress = () =>{
+        const handlerBackPress = () => {
             onBack();
             return true;
         }
         const backHandler = BackHandler.addEventListener("hardwareBackPress", handlerBackPress);
         return () => backHandler.remove();
     }, [formValues]);
-    return { control, onBack, favState,handlerToggleFav,handlerDelete }
+    return {
+        control,
+        onBack,
+        favState,
+        handlerToggleFav,
+        handlerDelete,
+        handleOpenBottomSheet,
+        noteColor,
+        handleChangeColor,
+        bottomSheetRef
+    }
 }
 
 export default useCreateNote;

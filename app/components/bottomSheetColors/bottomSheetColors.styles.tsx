@@ -19,7 +19,9 @@ const styles = StyleSheet.create({
         borderRadius:25,
         height: 50,
         width: 50,
-        marginRight: 10,
+        marginHorizontal: 5,
+        justifyContent: "center",
+        alignItems: "center"
     }
 });
 export default styles;

@@ -3,7 +3,6 @@ import {colors} from "@constants/index";
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor: colors.BACKGROUND,
         paddingHorizontal: 10,
     },
     container: {

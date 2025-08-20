@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import connection from "@db/connection";
-import { updateNote, deleteNote, updateNoteFav } from "@db/queries/notes.queries";
+import { updateNote, deleteNote, updateNoteFav, updateNoteColor } from "@db/queries/notes.queries";
 import { deleteFavorite, insertFavorite } from "@db/queries/favorites.queries";
 import { CUNoteFormData, CUNoteFormSchema, NoteType } from "@schemas/notes.schemas";
 import showToast from "@utils/showToast";
@@ -15,6 +15,7 @@ const useEditNote = (note: NoteType, goBack: () => void) => {
     const [favState, setfavState] = useState(note.favorite);
     const [currentContent, setCurrentContent] = useState(note.content);
     const [currentTitle, setCurrentTitle] = useState(note.title);
+    const [noteColor, setNoteColor] = useState(note.color);
     const bottomSheetRef = useRef<BottomSheet>(null);
     const handleOpenBottomSheet = useCallback(() => {
         bottomSheetRef.current?.expand();
@@ -104,6 +105,17 @@ const useEditNote = (note: NoteType, goBack: () => void) => {
             showToast("Error added note to favorites. Try again.");
         }
     };
+    const handleChangeColor = async (color: string) => {
+        try {
+            const db = await connection();
+            await updateNoteColor(db,note.id,color)
+            setNoteColor(color);
+        }
+        catch(error) {
+            console.error("Failed changed color", error);
+            showToast("Error changed note to favorites. Try again.");
+        }
+    }
 
     useEffect(() => {
         const handlerTimeout = setTimeout(() => {
@@ -121,14 +133,17 @@ const useEditNote = (note: NoteType, goBack: () => void) => {
         return () => backHandler.remove();
     }, [formValues]);
 
-    return { 
-        control, 
-        onBack, 
-        handlerToggleFav, 
-        favState, 
+    return {
+        control,
+        onBack,
+        handlerToggleFav,
+        favState,
         handlerDelete,
         handleOpenBottomSheet,
-        bottomSheetRef };
+        bottomSheetRef,
+        handleChangeColor,
+        noteColor
+    };
 }
 
 export default useEditNote;
