@@ -48,3 +48,10 @@ export const updateNoteColor = async (db:SQLiteDatabase,id:string,color:string) 
         WHERE id = '${id}'`;
     return await db.executeSql(query);
 }
+
+export const updateNotePinned = async (db:SQLiteDatabase, id:string, pinnedState:number) =>{
+        const query = `UPDATE notes 
+        SET pinned = ${pinnedState} ,updated_at = datetime('now','localtime') 
+        WHERE id = '${id}'`;
+    return await db.executeSql(query);
+}

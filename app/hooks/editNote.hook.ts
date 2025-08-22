@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import connection from "@db/connection";
-import { updateNote, deleteNote, updateNoteFav, updateNoteColor } from "@db/queries/notes.queries";
+import { updateNote, deleteNote, updateNoteFav, updateNoteColor, updateNotePinned } from "@db/queries/notes.queries";
 import { deleteFavorite, insertFavorite } from "@db/queries/favorites.queries";
 import { CUNoteFormData, CUNoteFormSchema, NoteType } from "@schemas/notes.schemas";
 import showToast from "@utils/showToast";
@@ -13,6 +13,7 @@ import { useRef, useCallback } from "react";
 
 const useEditNote = (note: NoteType, goBack: () => void) => {
     const [favState, setfavState] = useState(note.favorite);
+    const [pinned, setPinned] = useState(note.pinned);
     const [currentContent, setCurrentContent] = useState(note.content);
     const [currentTitle, setCurrentTitle] = useState(note.title);
     const [noteColor, setNoteColor] = useState(note.color);
@@ -108,15 +109,37 @@ const useEditNote = (note: NoteType, goBack: () => void) => {
     const handleChangeColor = async (color: string) => {
         try {
             const db = await connection();
-            await updateNoteColor(db,note.id,color)
+            await updateNoteColor(db, note.id, color)
             setNoteColor(color);
         }
-        catch(error) {
+        catch (error) {
             console.error("Failed changed color", error);
             showToast("Error changed note to favorites. Try again.");
         }
     }
 
+    const togglePin = async () => {
+        if (!note.id) {
+            showToast("Nothing to pin");
+            return;
+        }
+        try {
+            const db = await connection();
+
+            if (pinned === 0) {
+                setPinned(1);
+                await updateNotePinned(db, note.id, 1);
+                showToast("Note pinned");
+            } else {
+                setPinned(0);
+                await updateNotePinned(db, note.id, 0);
+                showToast("Note unpinned");
+            }
+        } catch (error) {
+            console.error("Failed to change pin state", error);
+            showToast("Error changing pin state");
+        }
+    };
     useEffect(() => {
         const handlerTimeout = setTimeout(() => {
             debouncedSave(formValues);
@@ -142,7 +165,9 @@ const useEditNote = (note: NoteType, goBack: () => void) => {
         handleOpenBottomSheet,
         bottomSheetRef,
         handleChangeColor,
-        noteColor
+        noteColor,
+        togglePin,
+        pinned
     };
 }
 

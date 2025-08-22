@@ -19,15 +19,19 @@ const EditFavoriteNote = ({ route, navigation }: Props) => {
         handleOpenBottomSheet, 
         handleChangeColor,
         noteColor,
-        bottomSheetRef } = useEditNote(note, navigation.goBack);
+        bottomSheetRef,
+        togglePin,
+        pinned } = useEditNote(note, navigation.goBack);
     return (
         <SafeAreaView style={{...styles.safeArea,backgroundColor:noteColor}}>
             <View style={styles.container}>
                 <Hearder
                     onBack={onBack}
                     favorite={favState}
+                    pinned={pinned}
                     handlerDelete={handlerDelete}
                     handlerToggleFav={handlerToggleFav}
+                    togglePin={togglePin}
                 />
                 <Title control={control} />
                 <Content control={control} />

@@ -8,6 +8,7 @@ export const createNotesTable = (tx: Transaction) => {
       content TEXT NOT NULL,
       color TEXT NOT NULL DEFAULT '#000000',
       favorite INTEGER NOT NULL DEFAULT 0,
+      pinned INTEGER NOT NULL DEFAULT 0,
       created_at DATETIME DEFAULT (datetime('now','localtime')),
       updated_at DATETIME DEFAULT (datetime('now','localtime'))
     );

@@ -1,15 +1,19 @@
 import ButtonIcon from "@components/buttonIcon/buttonIcon";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Pressable } from "react-native";
+import {colors,sizes} from "@constants/index";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type HearderProps = {
     onBack: () => void;
     favorite: 0 | 1;
+    pinned:  0 | 1;
     handlerDelete: () => Promise<void>;
     handlerToggleFav: () => Promise<void>;
+    togglePin: () => Promise<void>;
 };
 
-const Hearder = ({ favorite, handlerToggleFav, handlerDelete, onBack }: HearderProps) => {
-     return (
+const Hearder = ({ favorite,pinned, handlerToggleFav, handlerDelete, onBack, togglePin }: HearderProps) => {
+    return (
         <View style={styles.container}>
             <ButtonIcon
                 nameIcon="arrow-back"
@@ -27,6 +31,13 @@ const Hearder = ({ favorite, handlerToggleFav, handlerDelete, onBack }: HearderP
                     accessibilityLabel="add or remove favorites"
                     onPress={handlerToggleFav}
                 />
+                <Pressable
+                    onPress={togglePin}
+                    accessibilityRole="button"
+                    accessibilityLabel="toggle pin"
+                >
+                    <Icon name={pinned === 1 ? "pin" : "pin-outline"} size={sizes.FONT_XL} color={colors.ICON} />
+                </Pressable>
             </View>
         </View>
 

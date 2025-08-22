@@ -7,7 +7,10 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const App = () => {
   useEffect(() => {
-    initDB();
+    const startApp = async ()=>{
+      await initDB();
+    }
+    startApp();
   }, []);
   return (
     <GestureHandlerRootView>

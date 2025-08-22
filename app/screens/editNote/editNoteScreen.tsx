@@ -19,7 +19,9 @@ const EditNote = ({ route, navigation }: Props) => {
         handleOpenBottomSheet,
         bottomSheetRef,
         handleChangeColor,
-        noteColor } = useEditNote(note, navigation.goBack);
+        noteColor,
+        pinned,
+        togglePin } = useEditNote(note, navigation.goBack);
     
     return (
         <SafeAreaView style={{...styles.safeArea,backgroundColor:noteColor}}>
@@ -29,6 +31,8 @@ const EditNote = ({ route, navigation }: Props) => {
                     favorite={favState}
                     handlerDelete={handlerDelete}
                     handlerToggleFav={handlerToggleFav}
+                    pinned={pinned}
+                    togglePin={togglePin}
                 />
                 <Title control={control} />
                 <Content control={control} />

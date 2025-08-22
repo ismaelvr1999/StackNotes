@@ -4,6 +4,7 @@ const NoteSchema = z.object({
   id: z.uuid(),
   title: z.string(),
   favorite: z.literal([0,1]),
+  pinned: z.literal([0,1]),
   content: z.string(),
   color: z.string(),
   created_at: z.iso.datetime(),
@@ -17,6 +18,7 @@ export const CUNoteFormSchema = z.object({
   title: z.string(),
   color: z.string(),
   favorite: z.literal([0,1]),
+  pinned: z.literal([0,1]),
   content: z.string().min(1, "Content is required"),
 });
 
