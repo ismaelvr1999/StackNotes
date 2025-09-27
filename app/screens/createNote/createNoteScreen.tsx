@@ -14,7 +14,9 @@ const CreateNote = () => {
         handleOpenBottomSheet,
         handleChangeColor,
         noteColor,
-        bottomSheetRef  } = useCreateNote();
+        bottomSheetRef,
+        togglePin,
+        pinned  } = useCreateNote();
     const date = new Date().toString();
     return (
         <SafeAreaView style={{...styles.safeArea,backgroundColor:noteColor}}>
@@ -24,6 +26,8 @@ const CreateNote = () => {
                     favorite={favState} 
                     handlerToggleFav={handlerToggleFav}
                     handlerDelete={handlerDelete}
+                    togglePin={togglePin}
+                    pinned={pinned}
                     />
                 <Title control={control} />
                 <Content control={control} />

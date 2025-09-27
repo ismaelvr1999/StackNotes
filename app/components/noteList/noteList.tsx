@@ -1,6 +1,7 @@
 import { NoteType } from "@schemas/notes.schemas";
 import { FlatList, Pressable, Text } from "react-native";
 import Card from "@components/card/card";
+import { useState } from "react";
 type Props = {
     notes: NoteType[];
     goEditNote: (note: NoteType) => void;
@@ -21,7 +22,7 @@ const NoteList = ({ notes, goEditNote, layout }: Props) => {
                         accessibilityLabel="Edit note"
                         style={{ flex: 1 }}
                     >
-                        <Card color={note.color} content={note.content} />
+                        <Card color={note.color} content={note.content} isPinned={note.pinned} />
                     </Pressable>
 
                 );

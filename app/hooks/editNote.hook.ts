@@ -18,6 +18,7 @@ const useEditNote = (note: NoteType, goBack: () => void) => {
     const [currentTitle, setCurrentTitle] = useState(note.title);
     const [noteColor, setNoteColor] = useState(note.color);
     const bottomSheetRef = useRef<BottomSheet>(null);
+    
     const handleOpenBottomSheet = useCallback(() => {
         bottomSheetRef.current?.expand();
     }, []);
@@ -57,10 +58,6 @@ const useEditNote = (note: NoteType, goBack: () => void) => {
     };
 
     const handlerDelete = async () => {
-        if (!note.id) {
-            showToast("Nothing to delete");
-            return;
-        }
         try {
             const db = await connection();
             await deleteNote(db, note.id);
@@ -88,10 +85,6 @@ const useEditNote = (note: NoteType, goBack: () => void) => {
     };
 
     const handlerToggleFav = async () => {
-        if (!note.id) {
-            showToast("Nothing to add");
-            return;
-        }
         try {
             const db = await connection();
             if (favState === 0) {
@@ -119,13 +112,8 @@ const useEditNote = (note: NoteType, goBack: () => void) => {
     }
 
     const togglePin = async () => {
-        if (!note.id) {
-            showToast("Nothing to pin");
-            return;
-        }
         try {
             const db = await connection();
-
             if (pinned === 0) {
                 setPinned(1);
                 await updateNotePinned(db, note.id, 1);

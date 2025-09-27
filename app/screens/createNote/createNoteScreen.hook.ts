@@ -15,10 +15,12 @@ import { noteColors } from '@constants/index';
 
 type NavigationProp = NativeStackNavigationProp<HomeStackParamList, 'CreateNote'>;
 const useCreateNote = () => {
-    const [favState, setfavState] = useState<0 | 1>(0);
+    const [favState, setFavorite] = useState<0 | 1>(0);
+    const [pinned, setPinned] = useState<0 | 1>(0);
     const navigation = useNavigation<NavigationProp>();
     const [noteColor, setNoteColor] = useState(noteColors.default);
     const bottomSheetRef = useRef<BottomSheet>(null);
+
     const { control, watch } = useForm<CUNoteFormData>({
         resolver: zodResolver(CUNoteFormSchema),
         defaultValues: {
@@ -41,6 +43,7 @@ const useCreateNote = () => {
                 const db = await connection();
                 formValues.favorite = favState;
                 formValues.color = noteColor;
+                formValues.pinned = pinned;
                 const noteAdded = await insertNote(db, formValues);
                 if (favState === 1 && noteAdded.id) {
                     await insertFavorite(db, noteAdded.id)
@@ -64,18 +67,18 @@ const useCreateNote = () => {
     };
 
     const handlerToggleFav = async () => {
-        if (favState === 0) {
-            setfavState(1);
-            return;
-        }
-        setfavState(0);
+        setFavorite(value => value === 1 ? 0 : 1);
     }
+
     const handleOpenBottomSheet = useCallback(() => {
         bottomSheetRef.current?.expand();
     }, []);
 
     const handleChangeColor = async (color: string) => {
         setNoteColor(color);
+    }
+    const togglePin = async () => {
+        setPinned(value => value === 1 ? 0 : 1);
     }
 
     useEffect(() => {
@@ -95,7 +98,9 @@ const useCreateNote = () => {
         handleOpenBottomSheet,
         noteColor,
         handleChangeColor,
-        bottomSheetRef
+        bottomSheetRef,
+        togglePin,
+        pinned
     }
 }
 

@@ -22,8 +22,8 @@ const useHome = () => {
         try {
             const db = await connection();
             const results = await getNotes(db);
-            const mappedNotes = mapRowsToArrays<NoteType>(results);
-            setNotes(mappedNotes);
+            const allNotes = mapRowsToArrays<NoteType>(results);
+            setNotes(allNotes);
         } catch (error) {
             console.error("Failed to fetch and refresh notes:", error);
             showToast("Error loading notes.  Try again.");

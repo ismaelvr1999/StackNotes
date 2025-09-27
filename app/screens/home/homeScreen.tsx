@@ -6,10 +6,9 @@ import useHome from "./homeScreen.hook";
 import FAB from "@components/fab/fab";
 import NoteList from "@components/noteList/noteList";
 
-
 const Home = () => {
     const { 
-        notes, 
+        notes,
         stackNav, 
         drawerNav, 
         search, 
@@ -26,7 +25,6 @@ const Home = () => {
                     setSearch={setSearch}
                     toggleLayout={toggleLayout}
                     listLayout={listLayout} />
-
                 <NoteList
                     notes={notes}
                     goEditNote={goEditNote}

@@ -4,6 +4,8 @@ import {colors,sizes} from "@constants/index";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
         borderColor: colors.BORDER,
         borderWidth: 1,
         borderRadius: 5,
